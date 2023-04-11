@@ -17,4 +17,9 @@ public class HomeController {
     public String viewCart() {
         return "/user/cart";
     }
+
+    @GetMapping("/login")
+    public String login() {
+        return "/user/login";
+    }
 }

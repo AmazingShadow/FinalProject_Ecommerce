@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    opacity: 0.9;
+    background-color: #DEE2E6;
+    font-family: Roboto Slab;
+    font-weight: 500;
+}
+.row {
+    background-color: #FAD246;
+    border-radius: 30px;
+    box-shadow: 10px 10px 20px #000957;
+}
+.img-fluid {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+.img-logo {
+    width: auto;
+    height: 10rem;
+}
+.btn-login {
+    background: #023E8A;
+    color: #FAD246;
+    font-weight: bold;
+    font-family: Roboto Slab;
+    font-size: 20px;
+}
+.btn-login1 {
+    background: #023E8A;
+    color: #FAD246;
+    font-weight: bold;
+    font-family: Roboto Slab;
+    font-size: 15px;
+}
+.form-control {
+    padding: 0.7rem 0.75rem;
+    border: 1px solid #000957;
+}
+.form-control::placeholder {
+    color: #000957;
+}
+.eye i {
+    cursor: pointer;
+    color: #000957;
+    position: absolute;
+    margin-top: -2rem;
+    right: 1rem;
+}
+.custom-control-label::after{
+    background-color: #000957;
+    border-radius: 2px;
+}
