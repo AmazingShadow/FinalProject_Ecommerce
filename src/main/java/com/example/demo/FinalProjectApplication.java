@@ -24,11 +24,11 @@ public class FinalProjectApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String username = "admin";
-		String password = "admin";
-		String encodedPassword = passwordEncoder.encode(password);
-		User user = new User(username, encodedPassword, "ADMIN", "0915137869","Hoang Van Huy", "ACCESS_TEST1,ACCESS_TEST2", 1);
-		userRepository.save(user);
+//		String username = "admin";
+//		String password = "admin";
+//		String encodedPassword = passwordEncoder.encode(password);
+//		User user = new User(username, encodedPassword, "ADMIN", "0915137869","Hoang Van Huy", "ACCESS_TEST1,ACCESS_TEST2", 1);
+//		userRepository.save(user);
 	}
 
 }
