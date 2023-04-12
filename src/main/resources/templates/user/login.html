@@ -21,15 +21,22 @@
     <div class="row no-gutters">
       <div class="col-lg-6">
         <img src="/images/logoLogin.png" class="img-logo" style="margin-left: auto; margin-right: auto;">
-        <form method="post">
+        <form method="post" name="f" th:action="@{/signin}">
+          <div th:if="${param.error}" class="alert alert-danger">
+            Invalid username and password.
+          </div>
+
+          <div th:if="${param.logout}" class="alert alert-success">
+            You have been logged out.
+          </div>
           <div class="form-row px-5">
             <div class="col-lg-10 mx-auto">
-              <input id="phone" type="text" name="phone" class="form-control" placeholder="Số điện thoại">
+              <input id="phone" type="text" name="txtUsername" class="form-control" placeholder="Số điện thoại">
             </div>
           </div>
           <div class="form-row px-5">
             <div class="col-lg-10 mx-auto mt-3">
-              <input id="password" type="password" name="password" class="form-control" placeholder="Mật khẩu">
+              <input id="password" type="password" name="txtPassword" class="form-control" placeholder="Mật khẩu">
               <div class="eye text-right">
                 <i class="far fa-eye"></i>
               </div>
@@ -41,7 +48,7 @@
           <div class="form-row px-5">
             <div class="col-lg-10 mx-auto mt-4">
               <button name="submit" class="button btn btn-login btn-block" value="submit"
-                      type="button">Đăng nhập</button>
+                      type="submit">Đăng nhập</button>
             </div>
           </div>
           <div class="form-row mt-3 ml-5 px-5">
