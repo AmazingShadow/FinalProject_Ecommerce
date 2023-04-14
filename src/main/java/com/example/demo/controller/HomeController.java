@@ -22,4 +22,8 @@ public class HomeController {
     public String login() {
         return "/user/login";
     }
+    @GetMapping("/admin")
+    public String admin() {
+        return "/admin/home-admin";
+    }
 }
