@@ -26,4 +26,9 @@ public class HomeController {
     public String admin() {
         return "/admin/home-admin";
     }
+    @GetMapping("/admin/promo-code")
+    public String promoCode() {
+        return "/admin/promo-code";
+    }
+
 }
