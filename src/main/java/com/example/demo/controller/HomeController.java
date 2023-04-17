@@ -31,4 +31,8 @@ public class HomeController {
         return "/admin/promo-code";
     }
 
+    @GetMapping("/admin/category")
+    public String category() {
+        return "/admin/category";
+    }
 }

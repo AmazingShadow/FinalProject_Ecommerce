@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link href="https://unpkg.com/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link th:href="@{/css/category.css}" rel="stylesheet" />
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+</head>
+<body>
+
+<div th:replace="admin/header-admin"></div>
+<div class="container-fluid ps-0">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-12">
+            <div th:replace="admin/sidebar.html"></div>
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-7 col-md-8 col-sm-12 mt-3 px-5">
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2>Quản lý <b>danh mục sản phẩm</b></h2>
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="#addProductModal" class="btn btn-success" data-bs-toggle="modal">
+                                    <span>Thêm danh mục sản phẩm</span></a>
+                                <a href="#deleteEmployeeModal" class="btn btn-danger" data-bs-toggle="modal">
+                                    <span>Xóa</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="selectAll">
+								<label for="selectAll"></label>
+							</span>
+                            </th>
+                            <th>Tên danh mục</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="checkbox1" name="options[]" value="1">
+								<label for="checkbox1"></label>
+							</span>
+                            </td>
+                            <td>Laptop</td>
+                            <td>
+                                <a href="#" class="edit"><i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
+                                    <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="checkbox2" name="options[]" value="1">
+								<label for="checkbox2"></label>
+							</span>
+                            </td>
+                            <td>PC</td>
+                            <td>
+                                <a href="#" class="edit"><i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
+                                    <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="checkbox3" name="options[]" value="1">
+								<label for="checkbox3"></label>
+							</span>
+                            </td>
+                            <td>Điện thoại</td>
+                            <td>
+                                <a href="#" class="edit"><i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
+                                    <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="checkbox4" name="options[]" value="1">
+								<label for="checkbox4"></label>
+							</span>
+                            </td>
+                            <td>Phụ kiện</td>
+                            <td>
+                                <a href="#" class="edit"><i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
+                                    <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="clearfix">
+                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                        <ul class="pagination">
+                            <li class="page-item disabled"><a href="#">Trang trước</a></li>
+                            <li class="page-item"><a href="#" class="page-link">1</a></li>
+                            <li class="page-item"><a href="#" class="page-link">2</a></li>
+                            <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                            <li class="page-item"><a href="#" class="page-link">4</a></li>
+                            <li class="page-item"><a href="#" class="page-link">5</a></li>
+                            <li class="page-item"><a href="#" class="page-link">Trang sau</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="deleteEmployeeModal" class="modal fade" tabindex="-1" aria-labelledby="deleteEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Xóa danh mục sản phẩm</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc muốn danh mục sản phẩm này không?</p>
+                    <p class="text-warning"><small>Thao tác này sẽ không thể hoàn lại.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-bs-dismiss="modal"  value="Hủy">
+                    <input type="submit" class="btn btn-danger" value="Xóa">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProductModalLabel">Thêm mã danh mục sản phẩm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label  class="form-label">Tên danh mục sản phẩm</label>
+                        <input type="text" class="form-control"  placeholder="Nhập tên danh mục sản phẩm">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/footer.html"></div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
