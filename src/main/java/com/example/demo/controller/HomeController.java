@@ -35,4 +35,8 @@ public class HomeController {
     public String category() {
         return "/admin/category";
     }
+    @GetMapping("/admin/product")
+    public String product() {
+        return "/admin/product";
+    }
 }

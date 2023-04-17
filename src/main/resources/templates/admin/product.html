@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home Admin</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+  <link href="https://unpkg.com/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+  <link th:href="@{/css/style.css}" rel="stylesheet" />
+  <script type="text/javascript" th:src="@{/js/main.js}"></script>
+</head>
+<body>
+
+<div th:replace="admin/header-admin"></div>
+<div class="container-fluid ps-0">
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-12">
+      <div th:replace="admin/sidebar.html"></div>
+    </div>
+    <div class="col-lg-9 col-md-8 col-sm-12 mt-3">
+      <div class="table-responsive">
+        <div class="table-wrapper">
+          <div class="table-title">
+            <div class="row">
+              <div class="col-sm-6">
+                <h2>Quản lý <b>sản phẩm</b></h2>
+              </div>
+              <div class="col-sm-6">
+                <a href="#addProductModal" class="btn btn-success" data-bs-toggle="modal">
+                  <span>Thêm sản phẩm</span></a>
+                <a href="#deleteEmployeeModal" class="btn btn-danger" data-bs-toggle="modal">
+                  <span>Xóa</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+              <th>
+                <span class="custom-checkbox">
+                  <input type="checkbox" id="selectAll">
+                  <label for="selectAll"></label>
+                </span>
+              </th>
+              <th>Tên sản phẩm</th>
+              <th>Hình ảnh</th>
+              <th>Giá tiền</th>
+              <th>Phân loại</th>
+              <th>Thông tin chi tiết</th>
+              <th>Mô tả</th>
+              <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>
+                <span class="custom-checkbox">
+                  <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                  <label for="checkbox1"></label>
+                </span>
+              </td>
+              <td>Laptop MSI</td>
+              <td>Hình</td>
+              <td>20.000.000VNĐ</td>
+              <td>Laptop</td>
+              <td  class="px-5">
+                <a href="#detailProductModal" data-bs-target="#detailProductModal" data-bs-toggle="modal">
+                  <i class="bi bi-pencil-square" title="Edit" data-bs-toggle="tooltip" style="color: green"></i>
+                </a>
+              </td>
+              <td class="">
+                <a href="#descriptionProductModal" data-bs-target="#descriptionProductModal" data-bs-toggle="modal">
+                  <i class="bi bi-pencil-square" title="Edit" data-bs-toggle="tooltip" style="color: green"></i>
+                </a>
+              </td>
+              <td>
+                <a href="#" class="edit"><i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
+                  <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="custom-checkbox">
+                  <input type="checkbox" id="checkbox2" name="options[]" value="1">
+                  <label for="checkbox2"></label>
+                </span>
+              </td>
+              <td>Laptop MSI</td>
+              <td>Hình</td>
+              <td>20.000.000VNĐ</td>
+              <td>Laptop</td>
+              <td class="px-5">
+                <a href="#detailProductModal" data-bs-target="#detailProductModal" data-bs-toggle="modal">
+                  <i class="bi bi-pencil-square" title="Edit" data-bs-toggle="tooltip" style="color: green"></i>
+                </a>
+              </td>
+              <td class="">
+                <a href="#descriptionProductModal" data-bs-target="#descriptionProductModal" data-bs-toggle="modal">
+                  <i class="bi bi-pencil-square" title="Edit" data-bs-toggle="tooltip" style="color: green"></i>
+                </a>
+              </td>
+              <td>
+                <a href="#" class="edit"><i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
+                  <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div class="clearfix">
+            <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+            <ul class="pagination">
+              <li class="page-item disabled"><a href="#">Trang trước</a></li>
+              <li class="page-item"><a href="#" class="page-link">1</a></li>
+              <li class="page-item"><a href="#" class="page-link">2</a></li>
+              <li class="page-item active"><a href="#" class="page-link">3</a></li>
+              <li class="page-item"><a href="#" class="page-link">4</a></li>
+              <li class="page-item"><a href="#" class="page-link">5</a></li>
+              <li class="page-item"><a href="#" class="page-link">Trang sau</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="deleteEmployeeModal" class="modal fade" tabindex="-1" aria-labelledby="deleteEmployeeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form>
+        <div class="modal-header">
+          <h4 class="modal-title">Xóa sản phẩm</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Bạn có chắc muốn sản phẩm này không?</p>
+          <p class="text-warning"><small>Thao tác này sẽ không thể hoàn lại.</small></p>
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-default" data-bs-dismiss="modal"  value="Hủy">
+          <input type="submit" class="btn btn-danger" value="Xóa">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal thêm-->
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addProductModalLabel">Thêm mã sản phẩm mới</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label  class="form-label">Tên sản phẩm</label>
+            <input type="text" class="form-control"  placeholder="Nhập tên sản phẩm">
+          </div>
+          <div class="mb-3">
+            <label  class="form-label">Giá sản phẩm</label>
+            <input type="text" class="form-control"  placeholder="Nhập giá sản phẩm">
+          </div>
+          <div class="mb-3">
+            <label for="productPrice" class="form-label">Phân loại</label>
+            <select class="form-select" id="productPrice">
+              <option value="0">Chọn phân loại</option>
+              <option value="1">Laptop</option>
+              <option value="2">PC</option>
+              <option value="3">Tai nghe</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label  class="form-label">Thông tin chi tiết</label>
+            <a href="#detailProductModal" data-bs-target="#detailProductModal" data-bs-toggle="modal" id="detail">
+              <i class="bi bi-pencil-square" title="Edit" data-bs-toggle="tooltip" style="color: green"></i>
+            </a>
+          </div>
+          <div class="mb-3">
+            <label  class="form-label">Mô tả</label>
+            <a href="#descriptionProductModal" data-bs-target="#descriptionProductModal" data-bs-toggle="modal" id="description">
+              <i class="bi bi-pencil-square" title="Edit" data-bs-toggle="tooltip" style="color: green"></i>
+            </a>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-primary">Lưu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal mô tả -->
+<div class="modal fade" id="descriptionProductModal" tabindex="-1" aria-labelledby="descriptionProductModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="descriptionProductModalLabel">Mô tả sản phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label  class="form-label">Tiêu đề bài viết</label>
+            <input type="text" class="form-control"  placeholder="Nhập tiêu đề bài viết">
+          </div>
+          <div class="mb-3">
+            <label for="image" class="form-label">Hình ảnh</label>
+            <input type="file" class="form-control" id="image">
+          </div>
+          <div class="mb-3">
+            <label  class="form-label">Mô tả</label>
+            <textarea type="text" class="form-control"  placeholder="Nhập nội dung bài viết"></textarea>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-primary">Lưu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal thông tin chi tiết -->
+<div class="modal fade" id="detailProductModal" tabindex="-1" aria-labelledby="detailProductModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailProductModalLabel">Thông tin chi tiết sản phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label  class="form-label">Thương hiệu</label>
+            <input type="text" class="form-control"  placeholder="Nhập thương hiệu sản phẩm">
+          </div>
+          <div class="mb-3">
+            <label  class="form-label">Bảo hành</label>
+            <input type="text" class="form-control"  placeholder="Nhập thông tin bảo hành">
+          </div>
+          <div class="mb-3">
+            <label  class="form-label">Thông tin chung</label>
+            <textarea type="text" class="form-control"  placeholder="Nhập thông tin chung"></textarea>
+          </div>
+          <div class="mb-3">
+            <label  class="form-label">Cấu hình chi tiết</label>
+            <textarea type="text" class="form-control"  placeholder="Nhập cấu hình chi tiết"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label  class="form-label">Thông tin kích thước</label>
+            <textarea class="form-control"  placeholder="Nhập thông tin kích thước"></textarea>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-primary">Lưu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div th:replace="admin/footer.html"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
