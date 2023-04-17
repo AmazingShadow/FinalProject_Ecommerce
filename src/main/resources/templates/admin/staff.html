@@ -6,13 +6,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link href="https://unpkg.com/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
     <link th:href="@{/css/style.css}" rel="stylesheet" />
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
 </head>
 <body>
 
-<div th:replace="admin/header-admin.html"></div>
+<div th:replace="admin/header-admin"></div>
 <div class="container-fluid ps-0">
     <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-12">
@@ -24,22 +26,14 @@
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h2>Quản lý <b>khách hàng</b></h2>
+                                <h2>Quản lý <b>nhân viên</b></h2>
                             </div>
                             <div class="col-sm-6">
-                                <div class="row">
-                                    <div class="col-sm-6"></div>
-                                    <div class="col-sm-4">
-                                        <div class="search-box">
-                                            <input type="text" class="form-control" placeholder="Search&hellip;">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2 px-3">
-                                        <a href="#deleteEmployeeModal" class="btn btn-danger" data-bs-toggle="modal">
-                                            <span>Xóa</span>
-                                        </a>
-                                    </div>
-                                </div>
+                                <a href="#addProductModal" class="btn btn-success" data-bs-toggle="modal">
+                                    <span>Thêm nhân viên mới</span></a>
+                                <a href="#deleteEmployeeModal" class="btn btn-danger" data-bs-toggle="modal">
+                                    <span>Xóa</span>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -52,10 +46,10 @@
 								<label for="selectAll"></label>
 							</span>
                             </th>
-                            <th>Tên khách hàng</th>
+                            <th>Họ và tên</th>
                             <th>Giới tính</th>
-                            <th>Số điện thoại</th>
-                            <th>Tài khoản</th>
+                            <th>Mức lương</th>
+                            <th>Chức vụ</th>
                             <th>Thao tác</th>
                         </tr>
                         </thead>
@@ -67,12 +61,12 @@
 								<label for="checkbox1"></label>
 							</span>
                             </td>
-                            <td>Ngan Tram</td>
+                            <td>Bảo Hân</td>
                             <td>Nữ</td>
-                            <td>037297xxxx</td>
-                            <td>ngtram5_</td>
+                            <td>15.000.000VNĐ</td>
+                            <td>Quản lý</td>
                             <td>
-                                <a href="#" class="edit"><i class="bi bi-eye" data-bs-toggle="tooltip" title="View" style="color: green"></i></a>
+                                <a href="#" class="edit"><i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
                                     <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
                                 </a>
@@ -85,12 +79,12 @@
 								<label for="checkbox2"></label>
 							</span>
                             </td>
-                            <td>Ngan Tram</td>
-                            <td>Nữ</td>
-                            <td>0389475939</td>
-                            <td>ngtramngu</td>
+                            <td>Anh Hào</td>
+                            <td>Nam</td>
+                            <td>8.000.000VNĐ</td>
+                            <td>Nhân viên bán hàng</td>
                             <td>
-                                <a href="#" class="edit"><i class="bi bi-eye" data-bs-toggle="tooltip" title="View" style="color: green"></i></a>
+                                <a href="#" class="edit"><i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
                                     <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
                                 </a>
@@ -122,11 +116,11 @@
         <div class="modal-content">
             <form>
                 <div class="modal-header">
-                    <h4 class="modal-title">Xóa khách hàng</h4>
+                    <h4 class="modal-title">Xóa nhân viên</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Bạn có chắc muốn xóa khách hàng này không?</p>
+                    <p>Bạn có chắc muốn xóa nhân viên này không?</p>
                     <p class="text-warning"><small>Thao tác này sẽ không thể hoàn lại.</small></p>
                 </div>
                 <div class="modal-footer">
@@ -137,8 +131,59 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProductModalLabel">Thêm nhân viên mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label  class="form-label">Họ và tên</label>
+                        <input type="text" class="form-control"  placeholder="Nhập tên nhân viên">
+                    </div>
+                    <div class="mb-3">
+                        <label for="productPrice" class="form-label">Giới tính</label>
+                        <select class="form-select" id="productPrice">
+                            <option value="0">Chọn giới tính</option>
+                            <option value="1">Nữ</option>
+                            <option value="2">Nam</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Mức lương</label>
+                        <input type="number" class="form-control"  placeholder="Nhập mức lương">
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Chức vụ</label>
+                        <select class="form-select">
+                            <option value="0">Chọn chức vụ</option>
+                            <option value="1">Nhân viên bán hàng</option>
+                            <option value="2">Thu ngân</option>
+                            <option value="3">Nhân viên kho</option>
+                            <option value="4">Quản lý</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div th:replace="admin/footer.html"></div>
 
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 </body>
