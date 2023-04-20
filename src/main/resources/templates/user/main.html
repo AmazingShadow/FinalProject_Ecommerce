@@ -3,7 +3,138 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:replace="~{/partials/header}"></th:block>
 <body>
-    <h1>Hello World!</h1>
+    <section class="content">
+    <div class="container">
+        <div class="slide">
+            <div id="carouselExampleCaptions" class="carousel slide">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="images/Slide1.png" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/Silde2.png" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/Slide3.png" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="product-list fs-5 py-3">
+            <div class="product_tittle border-bottom">
+                <strong class="bg-primary text-white py-1">LapTop Chính hãng</strong>
+            </div>
+            <div class="product_list-s">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="images/Lt1.webp" class="img-fluid">
+                        <ul class="list-unstyled">
+                            <li><a class="text-black fs-4" href="#" >Laptop HP Envy x360 13-bf0096TU</a></li>
+                        </ul>
+                        <h3 class="text-primary">22.990.000đ </h3>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="images/lt2.webp" class="img-fluid">
+                        <ul class="list-unstyled">
+                            <li><a class="text-black fs-4" href="#" >Laptop Lenovo IdeaPad Gaming 3 15IHU6</a></li>
+                        </ul>
+                        <h3 class="text-primary" >18.990.000đ </h3>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="images/lt3.webp" class="img-fluid">
+                        <ul class="list-unstyled">
+                            <li><a class="text-black fs-4" href="#" >Laptop HP Victus 16-e1107AX</a></li>
+                        </ul>
+                        <h3 class="text-primary">20.499.000đ </h3>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="images/lt4.webp " class="img-fluid">
+                        <ul class="list-unstyled">
+                            <li><a class="text-black fs-4" href="#" >Laptop ACER Aspire 5 A515-57-52Y2</a></li>
+                        </ul>
+                        <h3 class="text-primary">14.890.000đ </h3>
+                    </div>
+                </div>
+                <div class="product_list-s">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img src="images/Lt1.webp" class="img-fluid">
+                            <ul class="list-unstyled">
+                                <li><a class="text-black fs-4" href="#" >Laptop HP Envy x360 13-bf0096TU</a></li>
+                            </ul>
+                            <h3 class="text-primary">22.990.000đ </h3>
+                        </div>
+                        <div class="col-md-3">
+                            <img src="images/lt2.webp" class="img-fluid">
+                            <ul class="list-unstyled">
+                                <li><a class="text-black fs-4" href="#" >Laptop Lenovo IdeaPad Gaming 3 15IHU6</a></li>
+                            </ul>
+                            <h3 class="text-primary">18.990.000đ </h3>
+                        </div>
+                        <div class="col-md-3">
+                            <img src="images/lt3.webp" class="img-fluid">
+                            <ul class="list-unstyled">
+                                <li><a class="text-black fs-4" href="#" >Laptop HP Victus 16-e1107AX</a></li>
+                            </ul>
+                            <h3 class="text-primary">20.499.000đ </h3>
+                        </div>
+                        <div class="col-md-3">
+                            <img src="images/lt4.webp " class="img-fluid">
+                            <ul class="list-unstyled">
+                                <li><a class="text-black fs-4" href="#" >Laptop ACER Aspire 5 A515-57-52Y2</a></li>
+                            </ul>
+                            <h3 class="text-primary">14.890.000đ </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5"></div>
+            <div class="col-3">
+                <div aria-label="Page navigation example ">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                        <li class="page-item"><a class="page-link" href="#">6</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 <th:block th:replace="/partials/footer"></th:block>
 </html>
