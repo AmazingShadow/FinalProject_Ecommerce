@@ -44,4 +44,9 @@ public class HomeController {
     public String staff() {
         return "/admin/staff";
     }
+
+    @GetMapping("/admin/bill-mana")
+    public String bills() {
+        return "/admin/bills";
+    }
 }
