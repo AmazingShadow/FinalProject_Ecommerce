@@ -1,0 +1,303 @@
+body{
+    background-color: #f8f8fc;
+    font-family: 'Roboto Slab';
+    font-style: normal;
+    line-height: 1.25rem;
+    color: #333333;
+    padding-bottom: 2px;
+}
+.rec-01{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 1684px;
+    height: 529px;
+    left: 0px;
+    top: 140px;
+
+    /* c */
+
+    background: #FAD246;
+    border: 1px solid #000000;
+}
+.text-01{
+    position: absolute;
+    width: 1400px;
+    height: 98px;
+    left: 174px;
+    top: 229px;
+
+    font-weight: 600;
+    font-size: 74px;
+    line-height: 98px;
+    /* identical to box height */
+
+
+    /* Primary/8 */
+
+    color: #000957;
+}
+.text-02{
+    position: absolute;
+    width: 396px;
+    height: 87px;
+    left: 174px;
+    top: 316px;
+
+    font-family: 'Roboto Slab';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 50px;
+    line-height: 66px;
+
+    /* Primary/8 */
+
+    color: #000957;
+
+}
+.img-01{
+
+    position: absolute;
+    width: 364px;
+    height: 364px;
+    left: 1165px;
+    top: 434px;
+}
+.text-03{
+    /* I. CÁC BƯỚC BẢO HÀNH */
+
+    position: absolute;
+    width: 800px;
+    height: 66px;
+    left: 175px;
+    top: 765px;
+
+    /* title */
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 66px;
+    /* identical to box height */
+
+    color: #000000;
+}
+.rec-02{
+    position: absolute;
+    width: 1025px;
+    height: 332px;
+    left: 195px;
+    top: 894px;
+
+    background: #D9D9D9;
+    border-radius: 30px;
+}
+.rec-03{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 355px;
+    height: 132px;
+    left: 260px;
+    top: 844px;
+
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 20px;    
+}
+.text-04{
+    position: absolute;
+    width: 300px;
+    height: 47px;
+    left: 377px;
+    top: 882px;
+
+    /* heading1 */
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 47px;
+
+    color: #000000;
+}
+
+.rec-04{
+    position: absolute;
+    width: 1025px;
+    height: 332px;
+    left: 195px;
+    top: 1314px;
+
+    background: #D9D9D9;
+    border-radius: 30px;
+}
+.rec-05{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 355px;
+    height: 132px;
+    left: 260px;
+    top: 1264px;
+
+
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 20px;    
+}
+.text-05{
+    position: absolute;
+    width: 300px;
+    height: 47px;
+    left: 377px;
+    top: 1302px;
+
+    /* heading1 */
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 47px;
+
+    color: #000000;
+}
+
+.rec-06{
+    position: absolute;
+    width: 1025px;
+    height: 332px;
+    left: 195px;
+    top: 1747px;
+
+    background: #D9D9D9;
+    border-radius: 30px;
+}
+.rec-07{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 355px;
+    height: 132px;
+    left: 260px;
+    top: 1697px;
+
+
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 20px;    
+}
+.text-06{
+    position: absolute;
+    width: 300px;
+    height: 47px;
+    left: 377px;
+    top: 1735px;
+
+    /* heading1 */
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 47px;
+
+    color: #000000;
+}
+
+.rec-08{
+    position: absolute;
+    width: 1684px;
+    height: 894px;
+    left: 0px;
+    top: 2217px;
+
+    background: #D9D9D9;
+
+}
+
+.text-07{
+    /* II. ĐIỀU KIỆN BẢO HÀNH */
+
+    position: absolute;
+    width: 1000px;
+    height: 66px;
+    left: 175px;
+    top: 2245px;
+
+    /* title */
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 66px;
+    /* identical to box height */
+
+    color: #000000;
+}
+.text-08{
+    /* Sản phẩm đủ điều kiện bảo hành */
+
+    position: absolute;
+    width: 381px;
+    height: 94px;
+    left: 114px;
+    top: 2442px;
+
+    /* heading1 */
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 47px;
+
+    color: #000000;
+}
+.line-01{
+    position: absolute;
+    width: 662px;
+    height: 0px;
+    left: 250px;
+    top: 2700px;
+
+    border: 1px solid #000000;
+    transform: rotate(90deg);
+
+}
+.line-02{
+    /* Line 45 */
+
+    position: absolute;
+    width: 1484.01px;
+    height: 0px;
+    left: 99.99px;
+    top: 2666.99px;
+
+    border: 1px solid #000000;
+
+}
+.text-09{
+   /* Sản phẩm khôngđủ điều kiện bảo hành */
+
+    position: absolute;
+    width: 331px;
+    height: 141px;
+    left: 114px;
+    top: 2773px;
+
+    /* heading1 */
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 47px;
+
+    color: #000000;
+
+
+}
+
+.text-10{
+    /* III. CHÍNH SÁCH BẢO HÀNH CHUNG */
+
+    position: absolute;
+    width: 1500px;
+    height: 66px;
+    left: 175px;
+    top: 3162px;
+
+    /* title */
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 66px;
+    /* identical to box height */
+
+    color: #000000;
+
+
+}
