@@ -6,6 +6,8 @@ import com.example.demo.entity.Product;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,9 +24,14 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
 
+//    @Override
+//    public List<Product> findAll() {
+//        return productRepository.findAll();
+//    }
+
     @Override
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public Page<Product> findAll(Pageable page) {
+        return productRepository.findAll(page);
     }
 
     @Override

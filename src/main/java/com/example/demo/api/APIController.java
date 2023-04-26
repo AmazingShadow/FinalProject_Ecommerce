@@ -25,11 +25,11 @@ public class APIController {
         Optional<Product> product = productService.findById(id);
         if (product.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Success fully", product)
+                    new ResponseObject("ok", "Success fully", "Chỉnh sửa",product)
             );
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("failed", "Product is not found", "")
+                    new ResponseObject("failed", "Product is not found", "Chỉnh sửa","")
             );
         }
     }

@@ -76,8 +76,9 @@
                                 </a>
                             </td>
                             <td class="">
-                                <a href="#descriptionProductModal" data-bs-target="#descriptionProductModal"
+                                <a href="#descriptionProductModal" class="describe" data-bs-target="#descriptionProductModal"
                                    data-bs-toggle="modal">
+                                    <p style="display: none" class="productId" th:text="${product.getId()}"></p>
                                     <i class="bi bi-pencil-square" title="Edit" data-bs-toggle="tooltip"
                                        style="color: green"></i>
                                 </a>
@@ -95,15 +96,26 @@
                         </tbody>
                     </table>
                     <div class="clearfix">
-                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                         <ul class="pagination">
-                            <li class="page-item disabled"><a href="#">Trang trước</a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item"><a href="#" class="page-link">4</a></li>
-                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                            <li class="page-item"><a href="#" class="page-link">Trang sau</a></li>
+                            <li class="page-item">
+                                <a th:if="${products.hasPrevious()}" class="page-link" th:href="@{/admin/product(page=0)}">First</a>
+                            </li>
+                            <li class="page-item" th:classappend="${!products.hasPrevious()}  ? 'disabled' : ''">
+                                <a class="page-link" th:if="${products.hasPrevious()}"
+                                   th:href="@{/admin/product(page=${products.previousPageable().pageNumber})}">Previous</a>
+                            </li>
+                            <li th:each="i : ${#numbers.sequence(0, products.totalPages - 1)}"
+                                th:class="${i == products.number ? 'page-item active' : 'page-item'}"
+                                th:if="${i >= products.number - 2 and i <= products.number + 2}">
+                                <a th:if="${i >= 0}" class="page-link" th:href="@{/admin/product(page=${i})}" th:text="${i + 1}"></a>
+                            </li>
+                            <li class="page-item" th:classappend="${!products.hasNext()} ? 'disabled':''">
+                                <a class="page-link" th:if="${products.hasNext()}"
+                                   th:href="@{/admin/product(page=${products.nextPageable().pageNumber})}">Next</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" th:href="@{/admin/product(page=${products.totalPages - 1 > 0 ? products.totalPages - 1 : 0})}">Last</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -205,22 +217,24 @@
                     <div>
                         <div class="mb-3">
                             <label class="form-label">Tiêu đề bài viết</label>
-                            <input name="title" type="text" class="form-control" placeholder="Nhập tiêu đề bài viết">
+                            <input id="title" name="title" type="text" class="form-control" placeholder="Nhập tiêu đề bài viết">
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Hình ảnh</label>
                             <input type="file" name="file" class="form-control" id="image">
+                            <img alt="" id="imageUrl" width="100" height="100">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Mô tả</label>
-                            <textarea name="description" type="text" class="form-control"
+                            <textarea id="descript" name="description" type="text" class="form-control"
                                       placeholder="Nhập nội dung bài viết"></textarea>
                         </div>
 
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                    <button id="backTwo" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                    <button style="display: none" id="saveTwo" type="button" class="btn btn-primary" data-bs-dismiss="modal"></button>
                 </div>
             </div>
         </div>
@@ -276,7 +290,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                    <button id="back" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                    <button id="save" style="display: none" type="button" class="btn btn-primary" data-bs-dismiss="modal"></button>
                 </div>
             </div>
         </div>
@@ -292,16 +307,25 @@
 </html>
 <script>
     const information = document.querySelectorAll('.information')
+    const describes = document.querySelectorAll('.describe')
     const brand = document.getElementById('brand')
     const quantity = document.getElementById('quantity')
     const informations = document.getElementById('information')
     const color = document.getElementById('color')
     const config = document.getElementById('config')
     const size = document.getElementById('size')
+    const save = document.getElementById('save')
+    const back = document.getElementById('back')
+    const saveTwo = document.getElementById('saveTwo')
+    const backTwo = document.getElementById('backTwo')
+    const title = document.getElementById('title')
+    const imageUrl = document.getElementById('imageUrl')
+    const descript = document.getElementById('descript')
+    const image = document.getElementById('image')
     information.forEach(infor => {
         infor.onclick = function() {
             let id = infor.querySelector('.productId').innerHTML
-
+            save.style.display = 'block'
             $.ajax({
                 url: '/api/product/' + id,
                 method: 'GET',
@@ -314,11 +338,45 @@
                     color.value = data.color
                     config.innerHTML = data.config
                     size.innerHTML = data.size
+                    save.innerHTML = response.button
                 },
                 error: function(error) {
                     console.log(error);
                 }
             })
         }
+    })
+
+    describes.forEach(des => {
+        des.onclick = function() {
+            let id = des.querySelector('.productId').innerHTML
+            saveTwo.style.display = 'block'
+            image.style.display = 'none'
+            $.ajax({
+                url: '/api/product/' + id,
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    let data = response.data
+                    title.value = data.title
+                    imageUrl.src = 'data:image/jpeg;base64,' + data.image
+                    descript.value = data.description
+                    saveTwo.innerHTML = response.button
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            })
+        }
+    })
+
+    back.addEventListener("click", function() {
+        save.style.display = 'none'
+    })
+
+    backTwo.addEventListener("click", function() {
+        saveTwo.style.display = 'none'
+        imageUrl.style.display = 'none'
+        image.style.display = 'block'
     })
 </script>
