@@ -9,6 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @SpringBootApplication()
 public class FinalProjectApplication implements CommandLineRunner {
 
@@ -24,10 +27,11 @@ public class FinalProjectApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+//		Date now = new Date();
 //		String username = "admin";
 //		String password = "admin";
 //		String encodedPassword = passwordEncoder.encode(password);
-//		User user = new User(username, encodedPassword, "ADMIN", "0915137869","Hoang Van Huy", "ACCESS_TEST1,ACCESS_TEST2", 1);
+//		User user = new User(username, encodedPassword, "ADMIN", "0915137869","Hoang Van Huy", "ACCESS_TEST1,ACCESS_TEST2", 1, now, now);
 //		userRepository.save(user);
 	}
 
