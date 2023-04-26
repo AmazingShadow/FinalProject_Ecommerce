@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +40,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void saveProductToDatabase(MultipartFile file, ProductDTO product) {
         Product p;
+        System.out.println(product.toString());
+        Date now = new Date();
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         if(fileName.contains(".."))
         {
@@ -51,8 +54,14 @@ public class ProductServiceImpl implements ProductService {
                     .description(product.getDescription())
                     .image(Base64.getEncoder().encodeToString(file.getBytes()))
                     .name(product.getName())
+                    .title(product.getTitle())
+                    .information(product.getInformation())
+                    .config(product.getConfig())
+                    .size(product.getSize())
                     .price(product.getPrice())
                     .quantity(product.getQuantity())
+                    .createdAt(now)
+                    .updatedAt(now)
                     .category(Category.builder().id(product.getCategoryId()).build())
                     .build();
             productRepository.save(p);

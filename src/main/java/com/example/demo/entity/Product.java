@@ -18,11 +18,17 @@ import java.util.Set;
 @Builder
 public class Product {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private double price;
     private String brand;
     private String color;
+    private String config;
+    private String information;
+    private String size;
+    private String title;
+
     @Lob
     private String description;
     @Lob
