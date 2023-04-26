@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
-//    List<Product> findAll();
     Page<Product> findAll(Pageable page);
     Optional<Product> findById(Long id);
     Product insertProduct(Product product);
     void saveProductToDatabase(MultipartFile file, ProductDTO product);
+    boolean removeById(Long id);
 }

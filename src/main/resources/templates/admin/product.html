@@ -86,7 +86,7 @@
                             <td>
                                 <a href="#" class="edit"><i class="material-icons" data-bs-toggle="tooltip"
                                                             title="Edit">&#xE254;</i></a>
-                                <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal"
+                                <a href="#deleteEmployeeModal" th:data-id="${product.getId()}" data-bs-target="#deleteEmployeeModal"
                                    data-bs-toggle="modal">
                                     <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip"
                                        style="color: red"></i>
@@ -140,7 +140,7 @@
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Hủy">
-                    <input type="submit" class="btn btn-danger" value="Xóa">
+                    <input type="button" id="btnRemove" class="btn btn-danger" value="Xóa">
                 </div>
             </form>
         </div>
@@ -222,7 +222,7 @@
                         <div class="mb-3">
                             <label for="image" class="form-label">Hình ảnh</label>
                             <input type="file" name="file" class="form-control" id="image">
-                            <img alt="" id="imageUrl" width="100" height="100">
+                            <img style="display: none" alt="" id="imageUrl" width="100" height="100">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Mô tả</label>
@@ -298,6 +298,9 @@
     </div>
 </form>
 
+<form name="delete-form" method="POST">
+
+</form>
 <div th:replace="admin/footer.html"></div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -322,6 +325,10 @@
     const imageUrl = document.getElementById('imageUrl')
     const descript = document.getElementById('descript')
     const image = document.getElementById('image')
+    const deleteEmployeeModal = document.getElementById('deleteEmployeeModal')
+    let pId
+    const btnRemove = document.getElementById('btnRemove')
+    let deleteForm = document.forms['delete-form']
     information.forEach(infor => {
         infor.onclick = function() {
             let id = infor.querySelector('.productId').innerHTML
@@ -379,4 +386,15 @@
         imageUrl.style.display = 'none'
         image.style.display = 'block'
     })
+
+    deleteEmployeeModal.addEventListener('show.bs.modal', function(event) {
+        let button = event.relatedTarget
+        pId = button.getAttribute('data-id')
+    })
+
+    btnRemove.addEventListener('click', function() {
+        deleteForm.action = '/admin/product/' + pId
+        deleteForm.submit()
+    })
+
 </script>

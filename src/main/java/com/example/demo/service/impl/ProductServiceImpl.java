@@ -35,6 +35,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public boolean removeById(Long id) {
+        productRepository.deleteById(id);
+        return true;
+    }
+
+    @Override
     public Optional<Product> findById(Long id) {
         return productRepository.findById(id);
     }
@@ -47,7 +53,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void saveProductToDatabase(MultipartFile file, ProductDTO product) {
         Product p;
-        System.out.println(product.toString());
         Date now = new Date();
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         if(fileName.contains(".."))

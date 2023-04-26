@@ -46,6 +46,12 @@ public class AdminController {
         return "/admin/product";
     }
 
+    @PostMapping("/product/{id}")
+    public String deleteProduct(@PathVariable("id") Long id) {
+        productService.removeById(id);
+        return "redirect:/admin/product";
+    }
+
     @GetMapping("/staff")
     public String staff() {
         return "/admin/staff";
