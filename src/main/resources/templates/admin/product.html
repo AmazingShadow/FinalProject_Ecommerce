@@ -29,7 +29,7 @@
                                 <h2>Quản lý <b>sản phẩm</b></h2>
                             </div>
                             <div class="col-sm-6">
-                                <a href="#addProductModal" class="btn btn-success" data-bs-toggle="modal">
+                                <a href="#addProductModal" id="addNewProduct" class="btn btn-success" data-bs-toggle="modal">
                                     <span>Thêm sản phẩm</span></a>
                                 <a href="#deleteEmployeeModal" class="btn btn-danger" data-bs-toggle="modal">
                                     <span>Xóa</span>
@@ -84,7 +84,9 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="#" class="edit"><i class="material-icons" data-bs-toggle="tooltip"
+                                <a href="#" class="edit" data-bs-target="#addProductModal" data-bs-toggle="modal">
+                                    <p style="display: none" class="productName" th:text="${product.getId()}" ></p>
+                                    <i class="material-icons" data-bs-toggle="tooltip"
                                                             title="Edit">&#xE254;</i></a>
                                 <a href="#deleteEmployeeModal" th:data-id="${product.getId()}" data-bs-target="#deleteEmployeeModal"
                                    data-bs-toggle="modal">
@@ -160,13 +162,14 @@
                 </div>
                 <div class="modal-body">
                     <div>
+                        <p id="productIdThree" style="display: none"></p>
                         <div class="mb-3">
                             <label class="form-label">Tên sản phẩm</label>
-                            <input type="text" class="form-control" name="name" placeholder="Nhập tên sản phẩm">
+                            <input id="name" type="text" class="form-control" name="name" placeholder="Nhập tên sản phẩm">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Giá sản phẩm</label>
-                            <input type="text" class="form-control" name="price" placeholder="Nhập giá sản phẩm">
+                            <input id="price" type="text" class="form-control" name="price" placeholder="Nhập giá sản phẩm">
                         </div>
                         <div class="mb-3">
                             <label for="productPrice" class="form-label">Phân loại</label>
@@ -177,7 +180,7 @@
                                 <option value="3">Tai nghe</option>
                             </select>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3" id="chitiet">
                             <label class="form-label">Thông tin chi tiết</label>
                             <a href="#detailProductModal" data-bs-target="#detailProductModal" data-bs-toggle="modal"
                                id="detail">
@@ -185,7 +188,7 @@
                                    style="color: green"></i>
                             </a>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3" id="mota">
                             <label class="form-label">Mô tả</label>
                             <a href="#descriptionProductModal" data-bs-target="#descriptionProductModal"
                                data-bs-toggle="modal" id="description">
@@ -197,7 +200,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu</button>
+                    <button type="submit" id="saveThreeAdd" class="btn btn-primary">Lưu</button>
+                    <button style="display: none" type="button" id="saveThreeUpdate" class="btn btn-primary"></button>
                 </div>
             </div>
         </div>
@@ -215,6 +219,7 @@
                 </div>
                 <div class="modal-body">
                     <div>
+                        <p id="productIdTwo" style="display: none"></p>
                         <div class="mb-3">
                             <label class="form-label">Tiêu đề bài viết</label>
                             <input id="title" name="title" type="text" class="form-control" placeholder="Nhập tiêu đề bài viết">
@@ -251,6 +256,7 @@
                 </div>
                 <div class="modal-body">
                     <div>
+                        <p id="productId" style="display: none"></p>
                         <div class="mb-3">
                             <label class="form-label">Thương hiệu</label>
                             <input id="brand" name="brand" type="text" class="form-control"
@@ -291,7 +297,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="back" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-                    <button id="save" style="display: none" type="button" class="btn btn-primary" data-bs-dismiss="modal"></button>
+                    <button id="save"  style="display: none" type="button" class="btn btn-primary" data-bs-dismiss="modal"></button>
                 </div>
             </div>
         </div>
@@ -326,6 +332,19 @@
     const descript = document.getElementById('descript')
     const image = document.getElementById('image')
     const deleteEmployeeModal = document.getElementById('deleteEmployeeModal')
+    const addNewProduct = document.getElementById('addNewProduct')
+    const edit = document.querySelectorAll('.edit')
+    const name = document.getElementById('name')
+    const price = document.getElementById('price')
+    const productPrice = document.getElementById('productPrice')
+    const chitiet = document.getElementById('chitiet')
+    const mota = document.getElementById('mota')
+    const productId = document.getElementById('productId')
+    const productIdTwo = document.getElementById('productIdTwo')
+    const productIdThree = document.getElementById('productIdThree')
+    const saveThreeAdd = document.getElementById('saveThreeAdd')
+    const saveThreeUpdate = document.getElementById('saveThreeUpdate')
+
     let pId
     const btnRemove = document.getElementById('btnRemove')
     let deleteForm = document.forms['delete-form']
@@ -346,6 +365,7 @@
                     config.innerHTML = data.config
                     size.innerHTML = data.size
                     save.innerHTML = response.button
+                    productId.innerHTML = id
                 },
                 error: function(error) {
                     console.log(error);
@@ -358,7 +378,8 @@
         des.onclick = function() {
             let id = des.querySelector('.productId').innerHTML
             saveTwo.style.display = 'block'
-            image.style.display = 'none'
+            // image.style.display = 'none'
+            imageUrl.style.display = 'block'
             $.ajax({
                 url: '/api/product/' + id,
                 method: 'GET',
@@ -369,6 +390,7 @@
                     imageUrl.src = 'data:image/jpeg;base64,' + data.image
                     descript.value = data.description
                     saveTwo.innerHTML = response.button
+                    productIdTwo.innerHTML = id
                 },
                 error: function(error) {
                     console.log(error);
@@ -395,6 +417,138 @@
     btnRemove.addEventListener('click', function() {
         deleteForm.action = '/admin/product/' + pId
         deleteForm.submit()
+    })
+
+    addNewProduct.addEventListener('click', function() {
+        brand.value = ''
+        quantity.value = ''
+        informations.value = ''
+        color.value = ''
+        config.innerHTML = ''
+        size.innerHTML = ''
+        title.value = ''
+        descript.value = ''
+        imageUrl.style.display = 'none'
+        image.style.display = 'block'
+        chitiet.style.display = 'block'
+        mota.style.display = 'block'
+        saveThreeAdd.style.display = 'block'
+        saveThreeUpdate.style.display = 'none'
+    })
+
+    // update form 1
+    save.addEventListener('click', function() {
+        let id = productId.innerHTML
+        let data = {
+            brand: brand.value,
+            quantity: quantity.value,
+            information: informations.value,
+            color: color.value,
+            config: config.value,
+            size: size.value,
+        }
+
+        $.ajax({
+            url: '/api/product/update/' + id,
+            method: 'PUT',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function(data) {
+                console.log('Successfully')
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        })
+    })
+
+    // update form 2
+    saveTwo.addEventListener('click', function() {
+        let id = productIdTwo.innerHTML
+        let data = {
+            title: title.value,
+            image: base64 !== '' ? base64 : null,
+            description: descript.value
+        }
+
+        $.ajax({
+            url: '/api/product/update/' + id,
+            method: 'PUT',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function(data) {
+                console.log('Successfully')
+                location.reload()
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        })
+    })
+
+    // update form 3
+    saveThreeUpdate.addEventListener('click', function() {
+        let id = productIdThree.innerHTML
+        let data = {
+            name: name.value,
+            price: price.value,
+            categoryId: productPrice.value
+        }
+
+        $.ajax({
+            url: '/api/product/update/' + id,
+            method: 'PUT',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function(data) {
+                console.log('Successfully')
+                location.reload()
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        })
+
+    })
+
+
+    edit.forEach(edt => {
+        edt.onclick = function() {
+            let id = edt.querySelector('.productName').innerHTML // Lay id san pham
+            chitiet.style.display = 'none'
+            mota.style.display = 'none'
+            saveThreeAdd.style.display = 'none'
+            saveThreeUpdate.style.display = 'block'
+            $.ajax({
+                url: '/api/product/' + id,
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    const data = response.data
+                    name.value = data.name
+                    price.value = data.price
+                    productPrice.value = response.categoryId
+                    saveThreeUpdate.innerHTML = response.button
+                    productIdThree.innerHTML = data.id
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            })
+        }
+    })
+
+    let base64 = ''
+    image.addEventListener('change', () => {
+        const file = image.files[0];
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            base64 = reader.result.replace('data:', '').replace(/^.+,/, '');
+            imageUrl.src = 'data:image/jpeg;base64,' + base64
+        };
+
+        reader.readAsDataURL(file);
     })
 
 </script>

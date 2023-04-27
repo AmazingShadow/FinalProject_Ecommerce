@@ -12,5 +12,6 @@ public class ResponseObject {
     private String message;
 
     private String button;
+    private Long categoryId;
     private Object data;
 }

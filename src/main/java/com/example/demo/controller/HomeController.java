@@ -22,4 +22,9 @@ public class HomeController {
     public String login() {
         return "/user/login";
     }
+
+    @GetMapping("/product")
+    public String product() {
+        return "user/product";
+    }
 }
