@@ -5,6 +5,7 @@ import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
 import com.example.demo.response.ResponseObject;
 import com.example.demo.service.ProductService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,9 @@ public class APIController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/product/{id}")
     public ResponseEntity<ResponseObject> findById(@PathVariable("id") Long id) {
@@ -65,5 +69,11 @@ public class APIController {
             System.out.println("Khong tim thay san pham nay!");
         }
         productService.save(product);
+    }
+
+    // Delete user
+    @DeleteMapping("/user/{id}")
+    public void deleteUser(@PathVariable("id") Long id) {
+        userService.deleteById(id);
     }
 }

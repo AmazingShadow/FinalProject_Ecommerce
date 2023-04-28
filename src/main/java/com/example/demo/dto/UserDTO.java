@@ -15,6 +15,9 @@ public class UserDTO {
     private java.sql.Timestamp updatedAt;
     private String username;
     private Long cartId;
+    private String gender;
+    private String office;
+    private Double salary;
 
     public Long getId() {
         return this.id;
