@@ -66,8 +66,8 @@
                             <td th:text="${user.getSalary()}"></td>
                             <td th:text="${user.getOffice()}"></td>
                             <td>
-                                <a href="#viewStaffModal" data-bs-target="#viewStaffModal" data-bs-toggle="modal"><i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
+                                <a href="#viewStaffModal" th:data-id="${user.getId()}" class="edit" data-bs-target="#viewStaffModal" data-bs-toggle="modal"><i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="#deleteEmployeeModal" id="" th:data-id="${user.getId()}" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
                                     <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
                                 </a>
                             </td>
@@ -118,7 +118,7 @@
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-bs-dismiss="modal"  value="Hủy">
-                    <input type="submit" class="btn btn-danger" value="Xóa">
+                    <input type="submit" id="deleteEmployee" class="btn btn-danger" value="Xóa">
                 </div>
             </form>
         </div>
@@ -140,42 +140,48 @@
                         <div class="col-12">
                             <h6 class="mb-2 text-primary">Thông tin cơ bản</h6>
                         </div>
+                        <p style="display: none" id="employeeId"></p>
                         <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="fullName">Họ và Tên</label>
-                                <input type="text" class="form-control" id="fullName" name="fullname" disabled readonly>
+                                <input type="text" class="form-control" id="fullName" name="fullname" readonly>
                             </div>
                         </div>
                         <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="gender">Giới Tính</label>
-                                <select class="form-select" id="gender" name="gender" disabled readonly>
-                                </select>
+                                <input type="text" class="form-control" id="gender" name="gender" readonly>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="username">Tên Tài Khoản</label>
-                                <input type="text" class="form-control" id="username" name="username" disabled readonly>
+                                <input type="text" class="form-control" id="username" name="username" readonly>
                             </div>
                         </div>
                         <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" disabled readonly>
+                                <input type="email" class="form-control" id="email" name="email" readonly>
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 mb-3">
                             <label class="form-label" for="datepicker">Ngày Sinh</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                <input type="text" class="form-control" id="datepicker" name="birthday" placeholder="dd/mm/yyyy" disabled readonly>
+                                <input type="text" class="form-control" id="datepicker" name="birthday" placeholder="dd/mm/yyyy" readonly>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="office">Chức vụ</label>
-                                <input type="text" class="form-control" id="office" name="office">
+                                <select name="office" id="office" class="form-select">
+                                    <option value="0">Chọn chức vụ</option>
+                                    <option value="Nhân viên bán hàng">Nhân viên bán hàng</option>
+                                    <option value="Thu ngân">Thu ngân</option>
+                                    <option value="Nhân viên kho">Nhân viên kho</option>
+                                    <option value="Quản lý">Quản lý</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -192,16 +198,19 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="phone">Số Điện Thoại</label>
-                                <input type="number" class="form-control" id="phone" name="phone" disabled readonly>
+                                <input type="number" class="form-control" id="phone" name="phone" readonly>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="address">Địa Chỉ</label>
-                                <input type="name" class="form-control" id="address" name="address" disabled readonly>
+                                <input type="name" class="form-control" id="address" name="address" readonly>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" id="save" class="btn btn-primary" value="Lưu">
                 </div>
             </form>
         </div>
@@ -218,21 +227,34 @@
             </div>
             <div class="modal-body">
                 <form method="POST" action="/admin/staff/insert">
+                    <div class="d-flex">
                     <div class="mb-3">
                         <label class="form-label">Họ và tên</label>
                         <input name="name" type="text" class="form-control"  placeholder="Nhập tên nhân viên">
                     </div>
+                        <div class="mb-3 ms-3">
+                            <label for="productPrice" class="form-label">Giới tính</label>
+                            <select name="gender" class="form-select" id="productPrice">
+                                <option value="Nam">Nữ</option>
+                                <option value="Nữ">Nam</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="mb-3">
-                        <label for="productPrice" class="form-label">Giới tính</label>
-                        <select name="gender" class="form-select" id="productPrice">
-                            <option value="">Chọn giới tính</option>
-                            <option value="Nam">Nữ</option>
-                            <option value="Nữ">Nam</option>
-                        </select>
+                        <label class="form-label">Năm sinh</label>
+                        <input name="birthday" type="date" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Địa chỉ</label>
+                        <input name="address" type="text" class="form-control" placeholder="Nhập địa chỉ">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mức lương</label>
                         <input name="salary" type="number" class="form-control"  placeholder="Nhập mức lương">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input name="email" type="email" class="form-control"  placeholder="Nhập email">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Số điện thoại</label>
@@ -259,10 +281,98 @@
 </div>
 <div th:replace="admin/footer.html"></div>
 
-
-
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
+<script>
+    const name = document.getElementById('fullName')
+    const gender = document.getElementById('gender')
+    const username = document.getElementById('username')
+    const email = document.getElementById('email')
+    const datepicker = document.getElementById('datepicker')
+    const office = document.getElementById('office')
+    const salary = document.getElementById('salary')
+    const phone = document.getElementById('phone')
+    const address = document.getElementById('address')
+    const save = document.getElementById('save')
+    const edit = document.querySelectorAll('.edit')
+    const employeeId = document.getElementById('employeeId')
+    const deleteEmployee = document.getElementById('deleteEmployee')
+    const formDelete = document.getElementById('deleteEmployeeModal')
+    let userId
+
+    edit.forEach(edt => {
+        edt.addEventListener('click', function() {
+            let id = this.getAttribute('data-id')
+            $.ajax({
+                url: '/api/user/' + id,
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    let data = response.data
+                    console.log(data)
+                    let date = new Date(data.birthday)
+                    let birthday = date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0') + "-" + date.getDate().toString().padStart(2, '0');
+                    name.value = data.name
+                    gender.value = data.gender
+                    username.value = data.username
+                    email.value = data.email
+                    datepicker.value = birthday
+                    office.value = data.office
+                    salary.value = data.salary
+                    phone.value = data.phone
+                    address.value = data.address
+                    employeeId.innerHTML = data.id
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            })
+        })
+    })
+
+    save.addEventListener('click', function() {
+        const id = employeeId.innerHTML
+        const data = {
+            office: office.value,
+            salary: salary.value,
+        }
+
+        $.ajax({
+            url: '/api/user/' + id,
+            method: 'PUT',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function(response) {
+                console.log('Successfully')
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        })
+        $(document).ajaxStop(function() {
+            window.location.reload()
+        })
+    })
+
+    formDelete.addEventListener('show.bs.modal', function(event) {
+        let button = event.relatedTarget
+        userId = button.getAttribute('data-id')
+    })
+
+    deleteEmployee.addEventListener('click', function() {
+        $.ajax({
+            url: '/api/user/' + userId,
+            method: 'DELETE',
+            dataType: 'json',
+            success: function(response) {
+                console.log('Successfully')
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        })
+    })
+</script>

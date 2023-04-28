@@ -2,6 +2,8 @@ package com.example.demo.dto;
 
 import lombok.Data;
 
+import java.sql.Date;
+
 @Data
 public class UserDTO {
     private Long id;
@@ -18,7 +20,9 @@ public class UserDTO {
     private String gender;
     private String office;
     private Double salary;
-
+    private Date birthday;
+    private String address;
+    private String email;
     public Long getId() {
         return this.id;
     }

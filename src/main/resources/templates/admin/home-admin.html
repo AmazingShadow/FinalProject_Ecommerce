@@ -74,7 +74,7 @@
                             <td th:text="${user.getPhone()}"></td>
                             <td th:text="${user.getUsername()}"></td>
                             <td>
-                                <a th:data-id="${user.getId()}" href="#viewCustomerModal" data-bs-target="#viewCustomerModal" data-bs-toggle="modal">
+                                <a th:data-id="${user.getId()}" href="#viewCustomerModal" class="edit" data-bs-target="#viewCustomerModal" data-bs-toggle="modal">
                                     <i class="bi bi-eye" data-bs-toggle="tooltip" title="View" style="color: green"></i>
                                 </a>
                                 <a th:data-id="${user.getId()}" href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
@@ -151,34 +151,33 @@
                         </div>
                         <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-12">
                             <div class="mb-3">
-                                <label class="form-label" for="fullName">Họ và Tên</label>
-                                <input type="text" class="form-control" id="fullName" name="fullname" disabled readonly>
+                                <label class="form-label" for="name">Họ và Tên</label>
+                                <input type="text" class="form-control" id="name" name="name" readonly>
                             </div>
                         </div>
                         <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="gender">Giới Tính</label>
-                                <select class="form-select" id="gender" name="gender" disabled readonly>
-                                </select>
+                                <input type="text" class="form-control" id="gender" name="gender" readonly>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="username">Tên Tài Khoản</label>
-                                <input type="text" class="form-control" id="username" name="username" disabled readonly>
+                                <input type="text" class="form-control" id="username" name="username" readonly>
                             </div>
                         </div>
                         <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" disabled readonly>
+                                <input type="email" class="form-control" id="email" name="email" readonly>
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 mb-3">
                             <label class="form-label" for="datepicker">Ngày Sinh</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                <input type="text" class="form-control" id="datepicker" name="birthday" placeholder="dd/mm/yyyy" disabled readonly>
+                                <input type="date" class="form-control" id="datepicker" name="birthday" placeholder="dd/mm/yyyy" readonly>
                             </div>
                         </div>
                     </div>
@@ -189,13 +188,13 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="phone">Số Điện Thoại</label>
-                                <input type="number" class="form-control" id="phone" name="phone" disabled readonly>
+                                <input type="number" class="form-control" id="phone" name="phone" readonly>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="address">Địa Chỉ</label>
-                                <input type="name" class="form-control" id="address" name="address" disabled readonly>
+                                <input type="name" class="form-control" id="address" name="address" readonly>
                             </div>
                         </div>
                     </div>
@@ -213,10 +212,47 @@
 </body>
 </html>
 <script>
-    const view = document.querySelectorAll('.edit')
     const deleteButton = document.getElementById('delete')
     const formDelete = document.getElementById('deleteEmployeeModal')
     let userId
+    // detail customer
+    const edit = document.querySelectorAll('.edit')
+    const name = document.getElementById('name')
+    const gender = document.getElementById('gender')
+    const username = document.getElementById('username')
+    const email = document.getElementById('email')
+    const datepicker = document.getElementById('datepicker')
+    const phone = document.getElementById('phone')
+    const address = document.getElementById('address')
+
+    // [GET]
+    edit.forEach(edt => {
+        edt.onclick = function() {
+            let id = this.getAttribute('data-id')
+            $.ajax({
+                url: '/api/user/' + id,
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    let data = response.data
+                    let date = new Date(data.birthday)
+                    let birthday = date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0') + "-" + date.getDate().toString().padStart(2, '0');
+                    name.value = data.name
+                    gender.value = data.gender
+                    username.value = data.username
+                    email.value = data.email
+                    datepicker.value = birthday
+                    phone.value = data.phone
+                    address.value = data.address
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            })
+
+        }
+    })
+
     formDelete.addEventListener('show.bs.modal', function(event) {
         let button = event.relatedTarget
         userId = button.getAttribute('data-id')

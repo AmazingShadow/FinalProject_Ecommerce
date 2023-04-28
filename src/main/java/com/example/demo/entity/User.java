@@ -28,6 +28,9 @@ public class User {
     private String gender;
     private String office;
     private double salary;
+    private Date birthday;
+    private String address;
+    private String email;
 
     @Column(unique = true)
     private String phone;

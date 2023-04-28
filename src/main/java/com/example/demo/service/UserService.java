@@ -6,9 +6,13 @@ import com.example.demo.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Optional;
+
 public interface UserService {
     boolean deleteById(Long id);
     Page<User> findAllUserByOffice(Pageable pageable);
     Page<User> getAllCustomer(Pageable pageable);
     void saveEmployee(UserDTO user);
+    Optional<User> findById(Long id);
+    void save(User user);
 }
