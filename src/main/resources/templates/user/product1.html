@@ -9,13 +9,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link href="https://unpkg.com/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <link th:href="@{/css/cart-product.css}" rel="stylesheet" />
     <title>Sản phẩm</title>
 </head>
 <body>
 <th:block th:replace="~{/partials/header}"></th:block>
-
-
 <div class="container">
     <!--  Content  -->
     <div class="row my-3">
@@ -113,42 +110,80 @@
 
             <article class="filter-group">
                 <header class="card-header">
-                    <a aria-expanded="false" class="" data-bs-target="#collapse_9" data-bs-toggle="collapse" href="#">
+                    <a aria-expanded="true" class="" data-bs-target="#collapse_4" data-bs-toggle="collapse" href="#">
                         <div class="row">
-                            <div class="col"><h6 class="title">Tiêu chí khác </h6></div>
+                            <div class="col"><h6 class="title">Màu sắc</h6></div>
                             <div class="col-lg-2"><i class="icon-control fa fa-chevron-down"></i></div>
                         </div>
                     </a>
                 </header>
-                <div class="filter-content collapse in" id="collapse_9" style="">
+                <div class="filter-content collapse show" id="collapse_4" style="">
                     <div class="card-body">
-                        <label class="custom-control custom-radio">
-                            <input checked="" class="custom-control-input" name="myfilter_radio" type="radio">
-                            <div class="custom-control-label">Gaming</div>
+                        <label class="custom-control custom-checkbox">
+                            <input checked class="custom-control-input" type="checkbox">
+                            <div class="custom-control-label">All</div>
                         </label>
-
-                        <label class="custom-control custom-radio">
-                            <input class="custom-control-input" name="myfilter_radio" type="radio">
-                            <div class="custom-control-label">Student-Office</div>
+                        <label class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox">
+                            <div class="custom-control-label">Đen</div>
                         </label>
-
-                        <label class="custom-control custom-radio">
-                            <input class="custom-control-input" name="myfilter_radio" type="radio">
-                            <div class="custom-control-label">Graphic Design</div>
+                        <label class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox">
+                            <div class="custom-control-label">Bạc</div>
                         </label>
-
-                        <label class="custom-control custom-radio">
-                            <input class="custom-control-input" name="myfilter_radio" type="radio">
-                            <div class="custom-control-label">Thin and Light</div>
+                        <label class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox">
+                            <div class="custom-control-label">Vàng</div>
                         </label>
-                        <label class="custom-control custom-radio">
-                            <input class="custom-control-input" name="myfilter_radio" type="radio">
-                            <div class="custom-control-label">Businessmen</div>
+                        <label class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox">
+                            <div class="custom-control-label">Hồng đỏ</div>
+                        </label>
+                        <label class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox">
+                            <div class="custom-control-label">Xanh</div>
                         </label>
                     </div><!-- card-body.// -->
                 </div>
-
             </article> <!-- filter-group .// -->
+            <article class="filter-group">
+                <header class="card-header">
+                    <a aria-expanded="true" class="" data-bs-target="#collapse_5" data-bs-toggle="collapse" href="#">
+                        <div class="row">
+                            <div class="col"><h6 class="title">Mục đích sử dụng</h6></div>
+                            <div class="col-lg-2"><i class="icon-control fa fa-chevron-down"></i></div>
+                        </div>
+                    </a>
+                </header>
+                <div class="filter-content collapse show" id="collapse_5" style="">
+                    <div class="card-body">
+                        <label class="custom-control custom-checkbox">
+                            <input checked class="custom-control-input" type="checkbox">
+                            <div class="custom-control-label">All</div>
+                        </label>
+                        <label class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox">
+                            <div class="custom-control-label">Sinh viên</div>
+                        </label>
+                        <label class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox">
+                            <div class="custom-control-label">Gaming</div>
+                        </label>
+                        <label class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox">
+                            <div class="custom-control-label">Doanh nhân</div>
+                        </label>
+                        <label class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox">
+                            <div class="custom-control-label">Văn phòng</div>
+                        </label>
+                        <label class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox">
+                            <div class="custom-control-label">Mỏng nhẹ</div>
+                        </label>
+                    </div><!-- card-body.// -->
+                </div>
+            </article>
         </div>
         <div class="col col-9">
             <div class="row">
@@ -180,7 +215,7 @@
 
                         <a class="btn btn-block btn-primary" data-bs-toggle="modal" href="#">
                             <i class="fas fa-cart-plus fa-3xl me-1"></i>
-                            Add to cart </a>
+                            Thêm vào giỏ hàng </a>
                     </div>
                 </div>
                 <div class="col-md-4 my-3">
@@ -210,7 +245,7 @@
 
                         <a class="btn btn-block btn-primary" data-bs-toggle="modal" href="#">
                             <i class="fas fa-cart-plus fa-3xl me-1"></i>
-                            Add to cart </a>
+                            Thêm vào giỏ hàng </a>
                     </div>
                 </div>
                 <div class="col-md-4 my-3">
@@ -297,7 +332,6 @@
         </div>
     </div>
 </div>
-
 <th:block th:replace="/partials/footer"></th:block>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
