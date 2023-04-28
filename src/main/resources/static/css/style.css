@@ -193,6 +193,10 @@ table.table .avatar {
 #viewCustomerModal .modal-dialog {
 	max-width: 800px !important;
 }
+
+#viewStaffModal .modal-dialog {
+	max-width: 800px !important;
+}
 .modal .modal-dialog {
 	max-width: 400px;
 }
