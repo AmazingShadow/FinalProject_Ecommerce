@@ -81,6 +81,11 @@ public class AdminController {
         return "/admin/bills";
     }
 
+    @GetMapping("/revenue")
+    public String revenue() {
+        return "/admin/revenue";
+    }
+
     @PostMapping("/product")
     public String addProduct(@RequestParam("file")MultipartFile file, @ModelAttribute ProductDTO product) {
         productService.saveProductToDatabase(file, product);
