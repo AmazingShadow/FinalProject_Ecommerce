@@ -1,14 +1,14 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Entity
 @Data
@@ -31,6 +31,23 @@ public class User {
     private String phone;
     private int active;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Date createdAt;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at", nullable = false, updatable = false)
+    private Date updatedAt;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    @JsonManagedReference
+    private Cart cart;
+
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<Orders> orders;
+
     public List<String> getRoleList(){
         if(this.role.length() > 0){
             return Arrays.asList(this.role.split(","));
@@ -45,7 +62,7 @@ public class User {
         return new ArrayList<>();
     }
 
-    public User(String username, String password, String role, String phone, String name, String permissions, int active) {
+    public User(String username, String password, String role, String phone, String name, String permissions, int active, Date createdAt, Date updatedAt) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -53,5 +70,7 @@ public class User {
         this.name = name;
         this.active = active;
         this.phone = phone;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 }

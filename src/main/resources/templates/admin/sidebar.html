@@ -4,44 +4,44 @@
 
         <h6 class="text-uppercase mb-3">Quản lý người dùng</h6>
         <div class="list-group list-group-flush mb-3">
-            <a class="list-group-item list-group-item-action py-2 ripple active"
-               th:href="@{/admin}">
+            <a class="list-group-item list-group-item-action py-2 ripple power active"
+               th:href="@{/admin}" id="admin">
                 <i class="fas fa-users fa-fw me-3"></i><span>Khách hàng</span></a>
 
-            <a class="list-group-item list-group-item-action py-2 ripple"  th:href="@{/admin/staff}">
+            <a class="list-group-item list-group-item-action py-2 ripple power" id="staff" th:href="@{/admin/staff}">
                 <i class="fas fa-users-cog fa-fw me-3"></i><span>Nhân viên</span></a>
         </div>
 
         <h6 class="text-uppercase mb-3">Quản lý khuyến mãi </h6>
         <div class="list-group list-group-flush mb-3">
-            <a class="list-group-item list-group-item-action py-2 ripple" th:href="@{/admin/promo-code}">
+            <a class="list-group-item list-group-item-action py-2 ripple power" id="promo-code" th:href="@{/admin/promo-code}">
                 <i class="fas fa-tags fa-fw me-3"></i><span>Khuyến mãi</span></a>
 
         </div>
         <h6 class="text-uppercase mb-3">Quản lý sản phẩm</h6>
         <div class="list-group list-group-flush mb-3">
-            <a class="list-group-item list-group-item-action py-2 ripple"  th:href="@{/admin/category}">
+            <a class="list-group-item list-group-item-action py-2 ripple power" id="category" th:href="@{/admin/category}">
                 <i class="fas fa-folder fa-fw me-3"></i><span>Danh mục sản phẩm</span></a>
 
-            <a class="list-group-item list-group-item-action py-2 ripple"  th:href="@{/admin/product}">
+            <a class="list-group-item list-group-item-action py-2 ripple power" id="product" th:href="@{/admin/product}">
                 <i class="fas fa-laptop fa-fw me-3"></i><span>Sản phẩm</span></a>
         </div>
 
         <h6 class="text-uppercase mb-3">Quản lý đơn hàng</h6>
         <div class="list-group list-group-flush mb-3 ">
-            <a class="list-group-item list-group-item-action py-2 ripple" th:href="@{/admin/bill-mana}">
+            <a class="list-group-item list-group-item-action py-2 ripple power" id="bill-mana" th:href="@{/admin/bill-mana}">
                 <i class="fas fa-shopping-cart fa-fw me-3"></i><span>Quản lý đặt hàng</span></a>
 
-            <a class="list-group-item list-group-item-action py-2 ripple"  href="#">
+            <a class="list-group-item list-group-item-action py-2 ripple power">
                 <i class="fas fa-undo-alt fa-fw me-3"></i><span>Trả hàng/ Hoàn tiền</span></a>
         </div>
 
         <h6 class="text-uppercase mb-3">Chức năng khác</h6>
         <div class="list-group list-group-flush mb-3">
-            <a class="list-group-item list-group-item-action py-2 ripple" href="#">
+            <a class="list-group-item list-group-item-action py-2 ripple power" href="#">
                 <i class="fas fa-chart-area fa-fw me-3"></i><span>Báo cáo</span></a>
 
-            <a class="list-group-item list-group-item-action py-2 ripple"href="#">
+            <a class="list-group-item list-group-item-action py-2 ripple power" href="#">
                 <i class="fas fa-hands-helping fa-fw me-3"></i><span>Chăm sóc khách hàng</span></a>
         </div>
     </div>
@@ -49,9 +49,15 @@
 <!-- Sidebar -->
 
 <script>
+    let url = window.location.pathname.split('/').pop()
+    // customer.classList.add('active')
     function setActiveMenu() {
         //Đoạn này định viết kiểu click vào mục nào nó sẽ sáng lên á mà chạy khum đượt :<<
-
+        // Ok z de anh viet
+        let confirmActive = document.getElementById(url)
+        let active = document.querySelector('.active')
+        active.classList.remove('active')
+        confirmActive.classList.add('active')
     }
 
     setActiveMenu();
