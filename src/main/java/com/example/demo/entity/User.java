@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -26,6 +25,9 @@ public class User {
     private String role;
     private String name;
     private String permissions;
+    private String gender;
+    private String office;
+    private double salary;
 
     @Column(unique = true)
     private String phone;

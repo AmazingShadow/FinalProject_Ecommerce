@@ -8,7 +8,7 @@
                th:href="@{/admin}" id="admin">
                 <i class="fas fa-users fa-fw me-3"></i><span>Khách hàng</span></a>
 
-            <a class="list-group-item list-group-item-action py-2 ripple power" id="staff" th:href="@{/admin/staff}">
+            <a sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_QL')" class="list-group-item list-group-item-action py-2 ripple power" id="staff" th:href="@{/admin/staff}">
                 <i class="fas fa-users-cog fa-fw me-3"></i><span>Nhân viên</span></a>
         </div>
 

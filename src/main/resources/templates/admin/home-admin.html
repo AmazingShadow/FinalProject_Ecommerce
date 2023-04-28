@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Home Admin</title>
@@ -62,38 +62,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr th:each="user : ${users}">
                             <td>
 							<span class="custom-checkbox">
 								<input type="checkbox" id="checkbox1" name="options[]" value="1">
 								<label for="checkbox1"></label>
 							</span>
                             </td>
-                            <td>Ngan Tram</td>
-                            <td>Nữ</td>
-                            <td>037297xxxx</td>
-                            <td>ngtram5_</td>
+                            <td th:text="${user.getName()}"></td>
+                            <td th:text="${user.getGender()}"></td>
+                            <td th:text="${user.getPhone()}"></td>
+                            <td th:text="${user.getUsername()}"></td>
                             <td>
                                 <a href="#" class="edit"><i class="bi bi-eye" data-bs-toggle="tooltip" title="View" style="color: green"></i></a>
-                                <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
-                                    <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox2" name="options[]" value="1">
-								<label for="checkbox2"></label>
-							</span>
-                            </td>
-                            <td>Ngan Tram</td>
-                            <td>Nữ</td>
-                            <td>0389475939</td>
-                            <td>ngtramngu</td>
-                            <td>
-                                <a href="#" class="edit"><i class="bi bi-eye" data-bs-toggle="tooltip" title="View" style="color: green"></i></a>
-                                <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
+                                <a th:data-id="${user.getId()}" href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
                                     <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
                                 </a>
                             </td>
@@ -101,15 +83,26 @@
                         </tbody>
                     </table>
                     <div class="clearfix">
-                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                         <ul class="pagination">
-                            <li class="page-item disabled"><a href="#">Trang trước</a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item"><a href="#" class="page-link">4</a></li>
-                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                            <li class="page-item"><a href="#" class="page-link">Trang sau</a></li>
+                            <li class="page-item">
+                                <a th:if="${users.hasPrevious()}" class="page-link" th:href="@{/admin/(page=0)}">First</a>
+                            </li>
+                            <li class="page-item" th:classappend="${!users.hasPrevious()}  ? 'disabled' : ''">
+                                <a class="page-link" th:if="${users.hasPrevious()}"
+                                   th:href="@{/admin/(page=${users.previousPageable().pageNumber})}">Previous</a>
+                            </li>
+                            <li th:each="i : ${#numbers.sequence(0, users.totalPages - 1)}"
+                                th:class="${i == users.number ? 'page-item active' : 'page-item'}"
+                                th:if="${i >= users.number - 2 and i <= users.number + 2}">
+                                <a th:if="${i >= 0}" class="page-link" th:href="@{/admin/(page=${i})}" th:text="${i + 1}"></a>
+                            </li>
+                            <li class="page-item" th:classappend="${!users.hasNext()} ? 'disabled':''">
+                                <a class="page-link" th:if="${users.hasNext()}"
+                                   th:href="@{/admin/(page=${users.nextPageable().pageNumber})}">Next</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" th:href="@{/admin/(page=${users.totalPages - 1 > 0 ? users.totalPages - 1 : 0})}">Last</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -133,7 +126,7 @@
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-bs-dismiss="modal"  value="Hủy">
-                    <input type="submit" class="btn btn-danger" value="Xóa">
+                    <input type="button" id="delete" class="btn btn-danger" value="Xóa">
                 </div>
             </form>
         </div>
@@ -145,3 +138,29 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
+<script>
+    const deleteButton = document.getElementById('delete')
+    const formDelete = document.getElementById('deleteEmployeeModal')
+    let userId
+    formDelete.addEventListener('show.bs.modal', function(event) {
+        let button = event.relatedTarget
+        userId = button.getAttribute('data-id')
+    })
+
+    deleteButton.addEventListener('click', function() {
+        $.ajax({
+            url: '/api/user/' + userId,
+            method: 'DELETE',
+            dataType: 'json',
+            success: function(response) {
+                console.log('Successfully')
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        })
+        $(document).ajaxStop(function() {
+            window.location.reload()
+        })
+    })
+</script>

@@ -1,8 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.ProductDTO;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.Product;
+import com.example.demo.entity.User;
 import com.example.demo.service.ProductService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,8 +25,15 @@ public class AdminController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping
-    public String admin() {
+    public String admin(Model model, @RequestParam("page") Optional<Integer> page) {
+        Pageable pageable = PageRequest.of(page.orElse(0), 3);
+        Page<User> users = userService.getAllCustomer(pageable);
+        model.addAttribute("users", users);
+        model.addAttribute("startPage", 0);
         return "/admin/home-admin";
     }
 
@@ -53,8 +63,19 @@ public class AdminController {
     }
 
     @GetMapping("/staff")
-    public String staff() {
+    public String staff(Model model, @RequestParam("page") Optional<Integer> page) {
+        Pageable pageable = PageRequest.of(page.orElse(0), 3);
+        Page<User> users = userService.findAllUserByOffice(pageable);
+        model.addAttribute("users", users);
+        model.addAttribute("startPage", 0);
         return "/admin/staff";
+    }
+
+    // Add employee
+    @PostMapping("/staff/insert")
+    public String insertEmployee(@ModelAttribute UserDTO userDTO) {
+        userService.saveEmployee(userDTO);
+        return "redirect:/admin/staff";
     }
 
     @GetMapping("/bill-mana")

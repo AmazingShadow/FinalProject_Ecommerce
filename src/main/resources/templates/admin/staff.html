@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Home Admin</title>
@@ -54,35 +54,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr th:each="user: ${users}">
                             <td>
 							<span class="custom-checkbox">
 								<input type="checkbox" id="checkbox1" name="options[]" value="1">
 								<label for="checkbox1"></label>
 							</span>
                             </td>
-                            <td>Bảo Hân</td>
-                            <td>Nữ</td>
-                            <td>15.000.000VNĐ</td>
-                            <td>Quản lý</td>
-                            <td>
-                                <a href="#" class="edit"><i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
-                                    <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox2" name="options[]" value="1">
-								<label for="checkbox2"></label>
-							</span>
-                            </td>
-                            <td>Anh Hào</td>
-                            <td>Nam</td>
-                            <td>8.000.000VNĐ</td>
-                            <td>Nhân viên bán hàng</td>
+                            <td th:text="${user.getName()}"></td>
+                            <td th:text="${user.getGender()}"></td>
+                            <td th:text="${user.getSalary()}"></td>
+                            <td th:text="${user.getOffice()}"></td>
                             <td>
                                 <a href="#" class="edit"><i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                 <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
@@ -93,15 +75,26 @@
                         </tbody>
                     </table>
                     <div class="clearfix">
-                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                         <ul class="pagination">
-                            <li class="page-item disabled"><a href="#">Trang trước</a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item"><a href="#" class="page-link">4</a></li>
-                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                            <li class="page-item"><a href="#" class="page-link">Trang sau</a></li>
+                            <li class="page-item">
+                                <a th:if="${users.hasPrevious()}" class="page-link" th:href="@{/admin/staff(page=0)}">First</a>
+                            </li>
+                            <li class="page-item" th:classappend="${!users.hasPrevious()}  ? 'disabled' : ''">
+                                <a class="page-link" th:if="${users.hasPrevious()}"
+                                   th:href="@{/admin/staff(page=${users.previousPageable().pageNumber})}">Previous</a>
+                            </li>
+                            <li th:each="i : ${#numbers.sequence(0, users.totalPages - 1)}"
+                                th:class="${i == users.number ? 'page-item active' : 'page-item'}"
+                                th:if="${i >= users.number - 2 and i <= users.number + 2}">
+                                <a th:if="${i >= 0}" class="page-link" th:href="@{/admin/staff(page=${i})}" th:text="${i + 1}"></a>
+                            </li>
+                            <li class="page-item" th:classappend="${!users.hasNext()} ? 'disabled':''">
+                                <a class="page-link" th:if="${users.hasNext()}"
+                                   th:href="@{/admin/staff(page=${users.nextPageable().pageNumber})}">Next</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" th:href="@{/admin/staff(page=${users.totalPages - 1 > 0 ? users.totalPages - 1 : 0})}">Last</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -143,38 +136,42 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="POST" action="/admin/staff/insert">
                     <div class="mb-3">
-                        <label  class="form-label">Họ và tên</label>
-                        <input type="text" class="form-control"  placeholder="Nhập tên nhân viên">
+                        <label class="form-label">Họ và tên</label>
+                        <input name="name" type="text" class="form-control"  placeholder="Nhập tên nhân viên">
                     </div>
                     <div class="mb-3">
                         <label for="productPrice" class="form-label">Giới tính</label>
-                        <select class="form-select" id="productPrice">
-                            <option value="0">Chọn giới tính</option>
-                            <option value="1">Nữ</option>
-                            <option value="2">Nam</option>
+                        <select name="gender" class="form-select" id="productPrice">
+                            <option value="">Chọn giới tính</option>
+                            <option value="Nam">Nữ</option>
+                            <option value="Nữ">Nam</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label  class="form-label">Mức lương</label>
-                        <input type="number" class="form-control"  placeholder="Nhập mức lương">
+                        <label class="form-label">Mức lương</label>
+                        <input name="salary" type="number" class="form-control"  placeholder="Nhập mức lương">
                     </div>
                     <div class="mb-3">
-                        <label  class="form-label">Chức vụ</label>
-                        <select class="form-select">
+                        <label class="form-label">Số điện thoại</label>
+                        <input name="phone" type="number" class="form-control"  placeholder="Nhập số điện thoại">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Chức vụ</label>
+                        <select name="office" class="form-select">
                             <option value="0">Chọn chức vụ</option>
-                            <option value="1">Nhân viên bán hàng</option>
-                            <option value="2">Thu ngân</option>
-                            <option value="3">Nhân viên kho</option>
-                            <option value="4">Quản lý</option>
+                            <option value="Nhân viên bán hàng">Nhân viên bán hàng</option>
+                            <option value="Thu ngân">Thu ngân</option>
+                            <option value="Nhân viên kho">Nhân viên kho</option>
+                            <option value="Quản lý">Quản lý</option>
                         </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-primary">Lưu</button>
             </div>
         </div>
     </div>
