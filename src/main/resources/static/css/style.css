@@ -190,6 +190,9 @@ table.table .avatar {
 	background: #ddd;
 }
 /* Modal styles */
+#viewCustomerModal .modal-dialog {
+	max-width: 800px !important;
+}
 .modal .modal-dialog {
 	max-width: 400px;
 }
@@ -226,3 +229,8 @@ table.table .avatar {
 #descriptionProductModal .modal-body {
 	height: 500px;
 }
+
+/*#viewCustomerModal .modal-content {*/
+/*	width: 1200px;*/
+/*	height: 500px;*/
+/*}*/
