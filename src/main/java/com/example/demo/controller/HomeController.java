@@ -35,4 +35,8 @@ public class HomeController {
     public String detail() {
         return "user/detail";
     }
+    @GetMapping("/warranty")
+    public String warranty() {
+        return "user/warranty";
+    }
 }

@@ -1,0 +1,26 @@
+body {
+    background-color: #f8f8fc;
+    font-family: 'Roboto Slab';
+    font-style: normal;
+    line-height: 1.25rem;
+    color: #333333;
+    padding-bottom: 2px;
+}
+
+.head {
+    background-color: #FAD246;
+}
+
+.card {
+    border-radius: 30px;
+}
+
+.shadow {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+img.img-fluid {
+    max-width: 100%;
+    height: auto;
+    color: #000957;
+}
