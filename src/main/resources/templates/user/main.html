@@ -2,11 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:replace="~{/partials/header}"></th:block>
+<head>
+    <link th:href="@{/css/home.css}" rel="stylesheet"/>
+</head>
 <body>
-    <section class="content">
-    <div class="container">
-        <div class="slide">
-            <div id="carouselExampleCaptions" class="carousel slide">
+        <div class="container">
+            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -40,40 +41,10 @@
             </div>
         </div>
 
-        <div class="product-list fs-5 py-3">
-            <div class="product_tittle border-bottom">
-                <strong class="bg-primary text-white py-1">LapTop Chính hãng</strong>
-            </div>
-            <div class="product_list-s">
-                <div class="row">
-                    <div class="col-md-3">
-                        <img src="images/Lt1.webp" class="img-fluid">
-                        <ul class="list-unstyled">
-                            <li><a class="text-black fs-4" href="#" >Laptop HP Envy x360 13-bf0096TU</a></li>
-                        </ul>
-                        <h3 class="text-primary">22.990.000đ </h3>
-                    </div>
-                    <div class="col-md-3">
-                        <img src="images/lt2.webp" class="img-fluid">
-                        <ul class="list-unstyled">
-                            <li><a class="text-black fs-4" href="#" >Laptop Lenovo IdeaPad Gaming 3 15IHU6</a></li>
-                        </ul>
-                        <h3 class="text-primary" >18.990.000đ </h3>
-                    </div>
-                    <div class="col-md-3">
-                        <img src="images/lt3.webp" class="img-fluid">
-                        <ul class="list-unstyled">
-                            <li><a class="text-black fs-4" href="#" >Laptop HP Victus 16-e1107AX</a></li>
-                        </ul>
-                        <h3 class="text-primary">20.499.000đ </h3>
-                    </div>
-                    <div class="col-md-3">
-                        <img src="images/lt4.webp " class="img-fluid">
-                        <ul class="list-unstyled">
-                            <li><a class="text-black fs-4" href="#" >Laptop ACER Aspire 5 A515-57-52Y2</a></li>
-                        </ul>
-                        <h3 class="text-primary">14.890.000đ </h3>
-                    </div>
+        <div class="container px-5">
+            <div class="product-list fs-5 py-3">
+                <div class="product_tittle border-bottom">
+                    <strong class="bg-primary text-white py-1">LapTop Chính hãng</strong>
                 </div>
                 <div class="product_list-s">
                     <div class="row">
@@ -89,7 +60,7 @@
                             <ul class="list-unstyled">
                                 <li><a class="text-black fs-4" href="#" >Laptop Lenovo IdeaPad Gaming 3 15IHU6</a></li>
                             </ul>
-                            <h3 class="text-primary">18.990.000đ </h3>
+                            <h3 class="text-primary" >18.990.000đ </h3>
                         </div>
                         <div class="col-md-3">
                             <img src="images/lt3.webp" class="img-fluid">
@@ -106,9 +77,42 @@
                             <h3 class="text-primary">14.890.000đ </h3>
                         </div>
                     </div>
+                    <div class="product_list-s">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="images/Lt1.webp" class="img-fluid">
+                                <ul class="list-unstyled">
+                                    <li><a class="text-black fs-4" href="#" >Laptop HP Envy x360 13-bf0096TU</a></li>
+                                </ul>
+                                <h3 class="text-primary">22.990.000đ </h3>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="images/lt2.webp" class="img-fluid">
+                                <ul class="list-unstyled">
+                                    <li><a class="text-black fs-4" href="#" >Laptop Lenovo IdeaPad Gaming 3 15IHU6</a></li>
+                                </ul>
+                                <h3 class="text-primary">18.990.000đ </h3>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="images/lt3.webp" class="img-fluid">
+                                <ul class="list-unstyled">
+                                    <li><a class="text-black fs-4" href="#" >Laptop HP Victus 16-e1107AX</a></li>
+                                </ul>
+                                <h3 class="text-primary">20.499.000đ </h3>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="images/lt4.webp " class="img-fluid">
+                                <ul class="list-unstyled">
+                                    <li><a class="text-black fs-4" href="#" >Laptop ACER Aspire 5 A515-57-52Y2</a></li>
+                                </ul>
+                                <h3 class="text-primary">14.890.000đ </h3>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-5"></div>
             <div class="col-3">
@@ -135,7 +139,7 @@
             </div>
         </div>
     </div>
-    </section>
+
 </body>
 <th:block th:replace="/partials/footer"></th:block>
 </html>
