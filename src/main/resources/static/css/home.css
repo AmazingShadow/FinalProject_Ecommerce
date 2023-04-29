@@ -1,0 +1,10 @@
+body{
+    background-color: #ADB5BD;
+    font-family: Roboto Slab;
+}
+
+.category{
+    background-color: whitesmoke;
+    box-shadow:  1px 2px 4px 5px #858585;
+    border-radius: 25px;
+}
