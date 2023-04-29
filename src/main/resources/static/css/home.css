@@ -8,7 +8,17 @@ body{
     box-shadow:  1px 2px 4px 5px #858585;
     border-radius: 25px;
 }
-.hightlight{
+.highlight{
     background-color: #FAD246;
     box-shadow:  1px 2px 4px 5px #858585;
 }
+.product_tittle{
+    width: 30%;
+    padding: 5px;
+    margin: 0 auto;
+    background-color: #FAD246;
+    border-radius: 25px;
+    box-shadow:  1px 2px 4px 5px #858585;
+}
+
+
