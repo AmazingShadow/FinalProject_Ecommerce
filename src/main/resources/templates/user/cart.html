@@ -38,7 +38,7 @@
                                                 <div class="d-flex flex-row align-items-center">
                                                     <div>
                                                         <img
-                                                                th:src="@{'data:image/jpeg;base64,' + ${product.getImageUrl()}}"
+                                                                th:src="@{'data:image/jpeg;base64,' + ${product.getImage()}}"
                                                                 class="img-fluid rounded-3" alt="Shopping item"
                                                                 style="width: 65px;">
                                                     </div>
@@ -52,8 +52,8 @@
                                                         <h5 th:text="${product.getQuantity()}"
                                                             class="fw-normal mb-0"></h5>
                                                     </div>
-                                                    <div style="width: 80px;">
-                                                        <h5 th:text="${product.getPrice()} + '$'" class="mb-0"></h5>
+                                                    <div style="width: 200px;">
+                                                        <h5 th:text="${product.getPrice()}" class="mb-0 price"></h5>
                                                     </div>
                                                     <a th:data-id="${product.getId()}" data-bs-target="#exampleModal" class="delete"
                                                        data-bs-toggle="modal" href="#" style="color: #cecece;"><i
@@ -178,10 +178,41 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-danger deleteProduct">Xóa bỏ</button>
+                <button type="button" class="btn btn-danger deleteProduct" data-bs-dismiss="modal">Xóa bỏ</button>
             </div>
         </div>
     </div>
 </div>
 </body>
 </html>
+
+<script>
+    const price = document.querySelectorAll('.price')
+    const exampleModal = document.getElementById('exampleModal')
+    const deleteProduct = document.querySelector('.deleteProduct')
+    let productId
+    price.forEach(pr => {
+        let priceProduct = pr.innerHTML
+        pr.innerHTML = Number(priceProduct).toLocaleString('en-US') + ' VNĐ';
+    })
+
+    exampleModal.addEventListener('show.bs.modal', function(event) {
+        let button = event.relatedTarget
+        productId = button.getAttribute('data-id')
+    })
+
+    deleteProduct.addEventListener('click', function() {
+        $.ajax({
+            url: '/api/product/' + productId,
+            method: 'DELETE',
+            success: function(response) {
+                alert("Delete successfully!")
+                window.location.reload()
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        })
+    })
+
+</script>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
@@ -169,12 +169,15 @@
                                 </div>
                             </div>
                             <div class="fix-height rounded p-3 text-muted" style="background-color: #e9ecef">
-                                <div th:text="${product.getConfig()}" class="row quick-info"></div>
+                                <div th:text="${product.getConfig().split(';')[0]}" class="row quick-info"></div>
                             </div>
                         </div>
 
                         <a class="btn btn-block btn-primary" th:href="${'/detail/' + product.getId()}">Chi tiết sản phẩm</a>
-                        <a class="btn btn-block btn-primary" data-bs-toggle="modal" href="#">
+                        <a href="/login" sec:authorize="!isAuthenticated()" class="btn btn-block btn-primary" th:data-id="${product.getId()}">
+                            <i class="fas fa-cart-plus fa-3xl me-1"></i>
+                            Thêm vào giỏ hàng </a>
+                        <a sec:authorize="isAuthenticated()" class="btn btn-block btn-primary addToCart text-white" th:data-id="${product.getId()}" data-bs-toggle="modal">
                             <i class="fas fa-cart-plus fa-3xl me-1"></i>
                             Thêm vào giỏ hàng </a>
                     </div>
@@ -216,6 +219,7 @@
 <script>
     const price = document.querySelectorAll('.price')
     const oldPrice = document.querySelectorAll('.old-price')
+    const addToCart = document.querySelectorAll('.addToCart')
     price.forEach(pr => {
         let priceProduct = pr.innerHTML
         pr.innerHTML = Number(priceProduct).toLocaleString('en-US') + ' VNĐ';
@@ -224,5 +228,22 @@
     oldPrice.forEach(oldp => {
         let priceProduct = oldp.innerHTML
         oldp.innerHTML = Number(priceProduct).toLocaleString('en-US') + ' VNĐ';
+    })
+
+    addToCart.forEach(add => {
+        add.addEventListener('click', function() {
+            let id = this.getAttribute('data-id');
+            $.ajax({
+                url: '/api/addToCart/' + id,
+                method: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    alert("Thêm thành công!")
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            })
+        })
     })
 </script>

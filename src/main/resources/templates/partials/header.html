@@ -116,7 +116,10 @@
         <!-- Right elements -->
         <div class="d-flex align-items-center">
             <!-- Icon -->
-            <a class="link-secondary me-3" href="/cart">
+            <a sec:authorize="!isAuthenticated()" class="link-secondary me-3" href="/login">
+                <i class="fas fa-shopping-cart fa-lg"></i>
+            </a>
+            <a sec:authorize="isAuthenticated()" class="link-secondary me-3" href="/cart">
                 <i class="fas fa-shopping-cart fa-lg"></i>
             </a>
 

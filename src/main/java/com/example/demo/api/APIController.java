@@ -4,18 +4,15 @@ import com.example.demo.dto.CategoryDTO;
 import com.example.demo.dto.ProductDTO;
 import com.example.demo.dto.PromotionsDTO;
 import com.example.demo.dto.UserDTO;
-import com.example.demo.entity.Category;
-import com.example.demo.entity.Product;
-import com.example.demo.entity.Promotions;
-import com.example.demo.entity.User;
+import com.example.demo.entity.*;
+import com.example.demo.repository.CartRepository;
 import com.example.demo.response.ResponseObject;
-import com.example.demo.service.CategoryService;
-import com.example.demo.service.ProductService;
-import com.example.demo.service.PromotionService;
-import com.example.demo.service.UserService;
+import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
@@ -37,6 +34,12 @@ public class APIController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private CartService cartService;
+
+    @Autowired
+    private CartDetailService cartDetailService;
 
     @GetMapping("/product/{id}")
     public ResponseEntity<ResponseObject> findById(@PathVariable("id") Long id) {
@@ -199,5 +202,52 @@ public class APIController {
     @DeleteMapping("/category/{id}")
     public void deleteCategory(@PathVariable("id") Long id) {
         categoryService.deleteById(id);
+    }
+
+    @PostMapping("/addToCart/{id}")
+    public void addToCart(@PathVariable("id") Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Long userId = userService.findByUsername(username).getCart().getId();
+
+        Product product = productService.findById(id).orElse(null);
+        Cart cart = cartService.findById(userId).orElse(null);
+
+        if (product != null && cart != null) {
+            DetailCart detailCart = cartDetailService.findDetailCartByCartIdAndProductId(cart, product);
+            if (detailCart != null) {
+                detailCart.setQuantity(detailCart.getQuantity() + 1);
+            } else {
+                detailCart = new DetailCart();
+                detailCart.setQuantity(1);
+                detailCart.setCartId(cart);
+                detailCart.setProductId(product);
+            }
+            // cart
+            cart.setTotalPrice(cart.getTotalPrice() + 1 * product.getNewPrice());
+            //
+            cartDetailService.save(detailCart);
+            cartService.save(cart);
+        }
+
+    }
+
+    @DeleteMapping("/product/{id}")
+    public void deleteProduct(@PathVariable("id") Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Long userId = userService.findByUsername(username).getCart().getId();
+        Cart cart = cartService.findById(userId).orElse(null);
+        Product product = productService.findById(id).orElse(null);
+
+        if (cart != null && product != null) {
+            DetailCart detailCart = cartDetailService.findDetailCartByCartIdAndProductId(cart, product);
+            cart.setTotalPrice(cart.getTotalPrice() - detailCart.getQuantity() * product.getNewPrice());
+
+            //
+            cartDetailService.deleteById(detailCart.getId());
+            cartService.save(cart);
+        }
     }
 }
