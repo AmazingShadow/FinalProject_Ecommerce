@@ -13,6 +13,8 @@ public interface UserService {
     Page<User> findAllUserByOffice(Pageable pageable);
     Page<User> getAllCustomer(Pageable pageable);
     void saveEmployee(UserDTO user);
+
     Optional<User> findById(Long id);
     void save(User user);
+    User get(String username);
 }

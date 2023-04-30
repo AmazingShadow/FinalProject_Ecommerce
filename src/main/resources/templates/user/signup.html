@@ -21,7 +21,7 @@
     <div class="row no-gutters">
       <div class="col-lg-6">
         <img src="/images/logoLogin.png" class="img-logo" style="margin-left: auto; margin-right: auto;">
-        <form method="post" name="f" th:action="@{/signin}">
+        <form method="post" name="f" th:action="@{/signup}">
           <div th:if="${param.error}" class="alert alert-danger">
             Invalid username and password.
           </div>
@@ -31,12 +31,17 @@
           </div>
           <div class="form-row px-5">
             <div class="col-lg-10 mx-auto">
-              <input id="phone" type="text" name="txtUsername" class="form-control" placeholder="Số điện thoại">
+              <input th:value="${input_username}" name="username" id="username" class="form-control" placeholder="Tên đăng nhập">
             </div>
           </div>
           <div class="form-row px-5">
             <div class="col-lg-10 mx-auto mt-3">
-              <input id="password" type="password" name="txtPassword" class="form-control" placeholder="Mật khẩu">
+              <input th:value="${input_name}" name="name" id="name" type="text" class="form-control" placeholder="Họ và tên">
+            </div>
+          </div>
+          <div class="form-row px-5">
+            <div class="col-lg-10 mx-auto mt-3">
+              <input th:value="${input_password}" name="pwd" id="pwd1" type="password" class="form-control" placeholder="Mật khẩu">
               <div class="eye text-right">
                 <i class="far fa-eye"></i>
               </div>
@@ -44,7 +49,7 @@
           </div>
           <div class="form-row px-5">
             <div class="col-lg-10 mx-auto mt-3">
-              <input id="password_confirm" type="password" name="txtPassword" class="form-control" placeholder="Xác nhận mật khẩu">
+              <input th:value="${input_re_password}" name="pwd_confirm" id="pwd2" type="password" class="form-control" placeholder="Mật khẩu">
               <div class="eye text-right">
                 <i class="far fa-eye"></i>
               </div>
@@ -53,21 +58,16 @@
           <!-- <div class="form-row mt-2 ml-5 text-danger error" style="display: none;">
             <p>Tên đăng nhập hoặc mật khẩu không đúng.</p>
           </div> -->
+          <div class="form-group" th:if="${alert}">
+            <div class="alert alert-danger alert-dismissible fade show">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <span th:text="${alert}"></span>
+            </div>
+          </div>
           <div class="form-row px-5">
             <div class="col-lg-10 mx-auto mt-4">
               <button name="submit" class="button btn btn-login btn-block" value="submit"
                       type="submit">Đăng ký</button>
-            </div>
-          </div>
-          <div style="display: flex; align-items: center;" class="px-5">
-            <hr style="flex: 1; border-width: 1px; border-color: #000957">
-            <span style="padding: 0 10px;">Hoặc</span>
-            <hr style="flex: 1; border-width: 1px; border-color: #000957">
-          </div>
-          <div class="form-row px-5">
-            <div class="col-lg-10 mx-auto mt-3">
-              <button name="submit" class="button btn btn-login1 btn-block" value="submit"
-                      type="button">Đăng nhập bằng Google</button>
             </div>
           </div>
 
