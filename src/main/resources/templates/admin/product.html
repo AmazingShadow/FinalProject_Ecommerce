@@ -175,9 +175,7 @@
                             <label for="productPrice" class="form-label">Phân loại</label>
                             <select class="form-select" name="categoryId" id="productPrice">
                                 <option value="-1">Chọn phân loại</option>
-                                <option value="1">Laptop</option>
-                                <option value="2">PC</option>
-                                <option value="3">Tai nghe</option>
+                                <option th:each="category : ${categories}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
                             </select>
                         </div>
                         <div class="mb-3" id="chitiet">

@@ -1,12 +1,17 @@
 package com.example.demo.api;
 
+import com.example.demo.dto.CategoryDTO;
 import com.example.demo.dto.ProductDTO;
+import com.example.demo.dto.PromotionsDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
+import com.example.demo.entity.Promotions;
 import com.example.demo.entity.User;
 import com.example.demo.response.ResponseObject;
+import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
+import com.example.demo.service.PromotionService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +30,12 @@ public class APIController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PromotionService promotionService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/product/{id}")
     public ResponseEntity<ResponseObject> findById(@PathVariable("id") Long id) {
@@ -112,5 +123,70 @@ public class APIController {
         } else {
             System.out.println("Khong tim thay user nay");
         }
+    }
+
+    @GetMapping("/promotion/{id}")
+    public ResponseEntity<ResponseObject> getPromotion(@PathVariable("id") Long id) {
+        Optional<Promotions> promotion = promotionService.findById(id);
+        if (promotion.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Successfully", "Cập nhật mã khuyến mãi", null, promotion)
+            );
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("failed", "Promotion not found", "", null, "")
+            );
+        }
+    }
+
+    @DeleteMapping("/promotion/{id}")
+    public void deletePromotion(@PathVariable("id") Long id) {
+        promotionService.deleteById(id);
+    }
+
+    @PutMapping("/promotion/{id}")
+    public void updatePromotion(@PathVariable("id") Long id, @RequestBody PromotionsDTO promotionsDTO) {
+        Promotions promotions = promotionService.findById(id).orElse(null);
+        if (promotions != null) {
+            promotions.setPromotionLimit(promotionsDTO.getPromotionLimit());
+            promotions.setDateStart(promotionsDTO.getDateStart());
+            promotions.setDateEnd(promotionsDTO.getDateEnd());
+            promotionService.save(promotions);
+        } else {
+            System.out.println("Promotion not found!");
+        }
+
+    }
+
+    @GetMapping("/category/{id}")
+    public ResponseEntity<ResponseObject> getCategory(@PathVariable("id") Long id) {
+        Optional<Category> category = categoryService.findById(id);
+        if (category.isPresent()) {
+            Long promoId = category.get().getPromotion().getId();
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Successfully", "Cập nhật danh mục", promoId, category)
+            );
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("failed", "Category not found", "", null, "")
+            );
+        }
+    }
+
+    @PutMapping("/category/{id}")
+    public void updateCategory(@PathVariable("id") Long id, @RequestBody CategoryDTO categoryDTO) {
+        Category category = categoryService.findById(id).orElse(null);
+        if (category != null) {
+            category.setDescription(categoryDTO.getDescription());
+            category.setPromotion(Promotions.builder().id(categoryDTO.getPromotion_id()).build());
+            categoryService.updateCategory(category);
+        } else {
+            System.out.println("Category not found");
+        }
+    }
+
+    @DeleteMapping("/category/{id}")
+    public void deleteCategory(@PathVariable("id") Long id) {
+        categoryService.deleteById(id);
     }
 }

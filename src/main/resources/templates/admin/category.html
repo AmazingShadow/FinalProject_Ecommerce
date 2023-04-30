@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Home Admin</title>
@@ -30,7 +30,7 @@
                                 <h2>Quản lý <b>danh mục sản phẩm</b></h2>
                             </div>
                             <div class="col-sm-6">
-                                <a href="#addProductModal" class="btn btn-success" data-bs-toggle="modal">
+                                <a href="#addProductModal" id="addCategory" class="btn btn-success" data-bs-toggle="modal">
                                     <span>Thêm danh mục sản phẩm</span></a>
                                 <a href="#deleteEmployeeModal" class="btn btn-danger" data-bs-toggle="modal">
                                     <span>Xóa</span>
@@ -52,72 +52,19 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr th:each="category : ${categories}">
                             <td>
 							<span class="custom-checkbox">
 								<input type="checkbox" id="checkbox1" name="options[]" value="1">
 								<label for="checkbox1"></label>
 							</span>
                             </td>
-                            <td>Laptop</td>
+                            <td th:text="${category.getName()}"></td>
                             <td>
-                                <a href="#addProductModal" data-bs-target="#addProductModal" data-bs-toggle="modal" class="edit" onclick="openModal('edit')">
+                                <a href="#addProductModal" th:data-id="${category.getId()}" data-bs-target="#addProductModal" data-bs-toggle="modal" class="edit" >
                                     <i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i>
                                 </a>
-                                <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
-                                    <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox2" name="options[]" value="1">
-								<label for="checkbox2"></label>
-							</span>
-                            </td>
-                            <td>PC</td>
-                            <td>
-                                <a href="#addProductModal" data-bs-target="#addProductModal" data-bs-toggle="modal" class="edit" onclick="openModal('edit')">
-                                    <i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i>
-                                </a>
-                                <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
-                                    <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox3" name="options[]" value="1">
-								<label for="checkbox3"></label>
-							</span>
-                            </td>
-                            <td>Điện thoại</td>
-                            <td>
-                                <a href="#addProductModal" data-bs-target="#addProductModal" data-bs-toggle="modal" class="edit" onclick="openModal('edit')">
-                                    <i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i>
-                                </a>
-                                <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
-                                    <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox4" name="options[]" value="1">
-								<label for="checkbox4"></label>
-							</span>
-                            </td>
-                            <td>Phụ kiện</td>
-                            <td>
-                                <a href="#addProductModal" data-bs-target="#addProductModal" data-bs-toggle="modal" class="edit" onclick="openModal('edit')">
-                                    <i class="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i>
-                                </a>
-                                <a href="#deleteEmployeeModal" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
+                                <a href="#deleteEmployeeModal" th:data-id="${category.getId()}" data-bs-target="#deleteEmployeeModal" data-bs-toggle="modal">
                                     <i class="bi bi-trash" title="Delete" data-bs-toggle="tooltip" style="color: red"></i>
                                 </a>
                             </td>
@@ -125,15 +72,26 @@
                         </tbody>
                     </table>
                     <div class="clearfix">
-                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                         <ul class="pagination">
-                            <li class="page-item disabled"><a href="#">Trang trước</a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item"><a href="#" class="page-link">4</a></li>
-                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                            <li class="page-item"><a href="#" class="page-link">Trang sau</a></li>
+                            <li class="page-item">
+                                <a th:if="${categories.hasPrevious()}" class="page-link" th:href="@{/admin/category(page=0)}">First</a>
+                            </li>
+                            <li class="page-item" th:classappend="${!categories.hasPrevious()}  ? 'disabled' : ''">
+                                <a class="page-link" th:if="${categories.hasPrevious()}"
+                                   th:href="@{/admin/category(page=${categories.previousPageable().pageNumber})}">Previous</a>
+                            </li>
+                            <li th:each="i : ${#numbers.sequence(0, categories.totalPages - 1)}"
+                                th:class="${i == categories.number ? 'page-item active' : 'page-item'}"
+                                th:if="${i >= categories.number - 2 and i <= categories.number + 2}">
+                                <a th:if="${i >= 0}" class="page-link" th:href="@{/admin/category(page=${i})}" th:text="${i + 1}"></a>
+                            </li>
+                            <li class="page-item" th:classappend="${!categories.hasNext()} ? 'disabled':''">
+                                <a class="page-link" th:if="${categories.hasNext()}"
+                                   th:href="@{/admin/category(page=${categories.nextPageable().pageNumber})}">Next</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" th:href="@{/admin/category(page=${categories.totalPages - 1 > 0 ? categories.totalPages - 1 : 0})}">Last</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -156,8 +114,8 @@
                     <p class="text-warning"><small>Thao tác này sẽ không thể hoàn lại.</small></p>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-bs-dismiss="modal"  value="Hủy">
-                    <input type="submit" class="btn btn-danger" value="Xóa">
+                    <input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Hủy">
+                    <input id="deleteCategory" type="submit" class="btn btn-danger" data-bs-dismiss="modal" value="Xóa">
                 </div>
             </form>
         </div>
@@ -175,16 +133,30 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <p style="display: none" id="idCategory"></p>
+                <form method="POST" action="/admin/category">
                     <div class="mb-3">
                         <label  class="form-label">Tên danh mục sản phẩm</label>
-                        <input type="text" class="form-control"  placeholder="Nhập tên danh mục sản phẩm">
+                        <input type="text" id="name" name="name" class="form-control"  placeholder="Nhập tên danh mục sản phẩm">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mô tả</label>
+                        <textarea id="description" name="description" type="text" class="form-control"
+                                  placeholder="Nhập nội dung bài viết"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productPrice" class="form-label">Phân loại</label>
+                        <select class="form-select" name="promotion_id" id="productPrice">
+                            <option value="-1">Chọn phân loại</option>
+                            <option th:each="promotion : ${promotions}" th:value="${promotion.getId()}" th:text="${promotion.getName()}"></option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary" id="add">Lưu</button>
+                        <button style="display: none" type="button" class="btn btn-primary" id="update" data-bs-dismiss="modal">Lưu</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-primary edit">Lưu</button>
             </div>
         </div>
     </div>
@@ -192,21 +164,96 @@
 <div th:replace="admin/footer.html"></div>
 
 <script>
-    function openModal(action) {
-        var modal = document.getElementById("addProductModal");
-        var title = document.getElementById("addProductModalLabel");
-        var button = modal.querySelector(".edit");
 
-        if (action === "add") {
-            title.textContent = "Thêm mã danh mục sản phẩm";
-            button.textContent = "Lưu";
-        } else if (action === "edit") {
-            title.textContent = "Sửa thông tin danh mục sản phẩm";
-            button.textContent = "Cập nhật";
+    const name = document.getElementById('name')
+    const description = document.getElementById('description')
+    const type = document.getElementById('productPrice')
+    const edit = document.querySelectorAll('.edit')
+    const add = document.getElementById('add')
+    const update = document.getElementById('update')
+    const addCategory = document.getElementById('addCategory')
+    const addProductModalLabel = document.getElementById('addProductModalLabel')
+    const idCategory = document.getElementById('idCategory')
+    const deleteEmployeeModal = document.getElementById('deleteEmployeeModal')
+    const deleteCategory = document.getElementById('deleteCategory')
+    let categoryId
+
+    edit.forEach(edt => {
+        edt.addEventListener('click', function() {
+            let id = this.getAttribute('data-id')
+            $.ajax({
+                url: '/api/category/' + id,
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    const data = response.data
+                    name.value = data.name
+                    description.value = data.description
+                    type.value = response.categoryId
+                    addProductModalLabel.innerHTML = response.button
+                    add.style.display = 'none'
+                    update.style.display = 'block'
+                    idCategory.innerHTML = data.id
+                    name.setAttribute('readonly', 'true')
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            })
+        })
+    })
+
+    addCategory.addEventListener('click', function() {
+        add.style.display = 'block'
+        update.style.display = 'none'
+        addProductModalLabel.innerHTML = 'Thêm danh mục sản phẩm'
+        name.value = ''
+        description.value = ''
+        type.value = ''
+        name.removeAttribute('readonly')
+    })
+
+    update.addEventListener('click', function() {
+        const id = idCategory.innerHTML
+        const data = {
+            description: description.value,
+            promotion_id: productPrice.value
         }
+        $.ajax({
+            url: '/api/category/' + id,
+            method: 'PUT',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function(response) {
+                alert('Cập nhật thành công!')
+                window.location.reload()
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        })
+    })
 
-        modal.show();
-    }
+    deleteEmployeeModal.addEventListener('show.bs.modal', function(event) {
+        let button = event.relatedTarget
+        categoryId = button.getAttribute('data-id')
+    })
+
+    deleteCategory.addEventListener('click', function() {
+        $.ajax({
+            url: '/api/category/' + categoryId,
+            method: 'DELETE',
+            dataType: 'json',
+            success: function(response) {
+                alert("Xoá thành công")
+                window.location.reload()
+            },
+            error: function() {
+                console.log(error)
+            }
+        })
+    })
+
 </script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

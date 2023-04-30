@@ -1,10 +1,16 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.CategoryDTO;
 import com.example.demo.dto.ProductDTO;
+import com.example.demo.dto.PromotionsDTO;
 import com.example.demo.dto.UserDTO;
+import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
+import com.example.demo.entity.Promotions;
 import com.example.demo.entity.User;
+import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
+import com.example.demo.service.PromotionService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +20,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -26,6 +34,12 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PromotionService promotionService;
+
+    @Autowired
+    private CategoryService categoryService;
+
     @GetMapping
     public String admin(Model model, @RequestParam("page") Optional<Integer> page) {
         Pageable pageable = PageRequest.of(page.orElse(0), 3);
@@ -36,20 +50,39 @@ public class AdminController {
     }
 
     @GetMapping("/promo-code")
-    public String promoCode() {
+    public String promoCode(Model model, @RequestParam("page") Optional<Integer> page) {
+        Pageable pageable = PageRequest.of(page.orElse(0), 3);
+        Page<Promotions> promotions = promotionService.getAllPromotions(pageable);
+        model.addAttribute("promotions", promotions);
+        model.addAttribute("startPage", 0);
         return "/admin/promo-code";
     }
 
     @GetMapping("/category")
-    public String category() {
+    public String category(Model model, @RequestParam("page") Optional<Integer> page) {
+        Pageable pageable = PageRequest.of(page.orElse(0), 3);
+        Page<Category> categories = categoryService.findAll(pageable);
+        List<Promotions> promotion = promotionService.getAll();
+
+        model.addAttribute("categories", categories);
+        model.addAttribute("promotions", promotion);
+        model.addAttribute("startPage", 0);
         return "/admin/category";
+    }
+
+    @PostMapping("/category")
+    public String addCategory(@ModelAttribute CategoryDTO categoryDTO) {
+        categoryService.save(categoryDTO);
+        return "redirect:/admin/category";
     }
 
     @GetMapping("/product")
     public String product(Model model, @RequestParam("page") Optional<Integer> page) {
         Pageable pageable = PageRequest.of(page.orElse(0), 3);
         Page<Product> products = productService.findAll(pageable);
+        List<Category> categories = categoryService.getAll();
         model.addAttribute("products", products);
+        model.addAttribute("categories", categories);
         model.addAttribute("startPage", 0);
         return "/admin/product";
     }
@@ -90,5 +123,11 @@ public class AdminController {
     public String addProduct(@RequestParam("file")MultipartFile file, @ModelAttribute ProductDTO product) {
         productService.saveProductToDatabase(file, product);
         return "redirect:/admin/product";
+    }
+
+    @PostMapping("/promotion")
+    public String addPromotion(@ModelAttribute PromotionsDTO promotionsDTO) {
+        promotionService.savePromotion(promotionsDTO);
+        return "redirect:/admin/promo-code";
     }
 }

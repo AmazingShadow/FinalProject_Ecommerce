@@ -16,4 +16,5 @@ public interface ProductService {
     void saveProductToDatabase(MultipartFile file, ProductDTO product);
     boolean removeById(Long id);
     boolean save(Product product);
+
 }
