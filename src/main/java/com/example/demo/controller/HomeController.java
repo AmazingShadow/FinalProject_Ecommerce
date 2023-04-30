@@ -86,7 +86,10 @@ public class HomeController {
         return "user/order";
     }
 
-
+    @GetMapping("/about")
+    public String about() {
+        return "user/about";
+    }
 
     @GetMapping("/signup")
     public String signup() {
