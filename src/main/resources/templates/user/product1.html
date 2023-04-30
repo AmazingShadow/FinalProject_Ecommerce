@@ -134,7 +134,7 @@
                         <li th:each="i : ${#numbers.sequence(0, products.totalPages - 1)}"
                             th:class="${i == products.number ? 'page-item active' : 'page-item'}"
                             th:if="${i >= products.number - 2 and i <= products.number + 2}">
-                            <a th:if="${i >= 0}" class="page-link" th:href="@{/product1(page=${i})}" th:text="${i + 1}"></a>
+                            <a th:if="${i >= 0}" class="page-link" th:href="@{/product(page=${i})}" th:text="${i + 1}"></a>
                         </li>
                         <li class="page-item" th:classappend="${!products.hasNext()} ? 'disabled':''">
                             <a class="page-link" th:if="${products.hasNext()}"
