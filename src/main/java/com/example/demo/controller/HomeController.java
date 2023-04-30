@@ -65,4 +65,8 @@ public class HomeController {
     public String warranty() {
         return "user/warranty";
     }
+    @GetMapping("/order")
+    public String order() {
+        return "user/order";
+    }
 }
