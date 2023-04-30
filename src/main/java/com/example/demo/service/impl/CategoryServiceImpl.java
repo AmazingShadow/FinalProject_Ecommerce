@@ -39,7 +39,6 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = Category.builder()
                 .name(categoryDTO.getName())
                 .description(categoryDTO.getDescription())
-                .promotion(Promotions.builder().id(categoryDTO.getPromotion_id()).build())
                 .build();
 
         categoryRepository.save(category);
