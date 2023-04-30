@@ -161,15 +161,15 @@
                                 <a th:text="${product.getName()}" class="card-title title" href="/detail"></a>
                                 <div class="row price-wrap mb-2 mx-1">
                                     <div class="col-lg-7 rounded-pill bg-danger text-white my-3 text-center">
-                                        <span th:text="${product.getPrice()}" class="price rounded-pill h6 price"></span>
+                                        <span th:text="${product.getNewPrice()}" class="price rounded-pill h6 price"></span>
                                     </div>
                                     <div class="col-lg-5 pt-3">
-                                        <del class="price-old"> Chỗ này là giá cũ</del>
+                                        <del th:text="${product.getPrice()}" class="price-old old-price"></del>
                                     </div>
                                 </div>
                             </div>
                             <div class="fix-height rounded p-3 text-muted" style="background-color: #e9ecef">
-                                <div class="row quick-info">Trong này là cấu hinhf</div>
+                                <div th:text="${product.getConfig()}" class="row quick-info"></div>
                             </div>
                         </div>
 
@@ -181,24 +181,29 @@
                 </div>
             </div>
             <nav aria-label="Page navigation example" class="mx-auto d-flex justify-content-center my-5">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">...</a></li>
-                    <li class="page-item"><a class="page-link" href="#">19</a></li>
-                    <li class="page-item"><a class="page-link" href="#">20</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
+                <div class="clearfix">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a th:if="${products.hasPrevious()}" class="page-link" th:href="@{/product(page=0)}">First</a>
+                        </li>
+                        <li class="page-item" th:classappend="${!products.hasPrevious()}  ? 'disabled' : ''">
+                            <a class="page-link" th:if="${products.hasPrevious()}"
+                               th:href="@{/product(page=${products.previousPageable().pageNumber})}">Previous</a>
+                        </li>
+                        <li th:each="i : ${#numbers.sequence(0, products.totalPages - 1)}"
+                            th:class="${i == products.number ? 'page-item active' : 'page-item'}"
+                            th:if="${i >= products.number - 2 and i <= products.number + 2}">
+                            <a th:if="${i >= 0}" class="page-link" th:href="@{/product(page=${i})}" th:text="${i + 1}"></a>
+                        </li>
+                        <li class="page-item" th:classappend="${!products.hasNext()} ? 'disabled':''">
+                            <a class="page-link" th:if="${products.hasNext()}"
+                               th:href="@{/product(page=${products.nextPageable().pageNumber})}">Next</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/product(page=${products.totalPages - 1 > 0 ? products.totalPages - 1 : 0})}">Last</a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
         </div>
     </div>
@@ -210,8 +215,14 @@
 </html>
 <script>
     const price = document.querySelectorAll('.price')
+    const oldPrice = document.querySelectorAll('.old-price')
     price.forEach(pr => {
         let priceProduct = pr.innerHTML
         pr.innerHTML = Number(priceProduct).toLocaleString('en-US') + ' VNĐ';
+    })
+
+    oldPrice.forEach(oldp => {
+        let priceProduct = oldp.innerHTML
+        oldp.innerHTML = Number(priceProduct).toLocaleString('en-US') + ' VNĐ';
     })
 </script>
