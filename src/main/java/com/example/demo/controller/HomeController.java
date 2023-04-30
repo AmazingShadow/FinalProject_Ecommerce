@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -57,8 +58,12 @@ public class HomeController {
         model.addAttribute("startPage", 0);
         return "user/product1";
     }
-    @GetMapping("/detail")
-    public String detail() {
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable("id") Long id, Model model) {
+        Product product = productService.findById(id).orElse(null);
+        if (product != null) {
+            model.addAttribute("product", product);
+        }
         return "user/detail";
     }
     @GetMapping("/warranty")
