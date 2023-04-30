@@ -1,16 +1,16 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Cart;
-import com.example.demo.entity.DetailCart;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.User;
-import com.example.demo.service.*;
+import com.example.demo.service.CartService;
+import com.example.demo.service.CategoryService;
+import com.example.demo.service.ProductService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -34,7 +32,8 @@ public class HomeController {
 
     @Autowired
     private ProductService productService;
-
+//    @Autowired
+//    private CategoryService cartService;
     @Autowired
     private CartService cartService;
 
@@ -43,9 +42,6 @@ public class HomeController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private CartDetailService cartDetailService;
-
 
     @GetMapping
     public String index() {
@@ -53,29 +49,7 @@ public class HomeController {
     }
 
     @GetMapping("/cart")
-    public String viewCart(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Long userId = 0L;
-        int index = 0;
-        // Truy vấn cơ sở dữ liệu để lấy id của username
-        User user = userService.findByUsername(username);
-        if (user != null) {
-            userId = user.getCart().getId();
-        }
-//        Long userId = userService.findByUsername(username).getCart().getId();
-
-        Cart cart = cartService.findById(userId).orElse(null);
-        List<Product> products = cartDetailService.findAllProduct(cart);
-        List<DetailCart> detailCarts = cartDetailService.findDetailCart(cart);
-        List<Product> productList = new ArrayList<>();
-        for (Product product : products) {
-            Product product1 = productService.findById(product.getId()).orElse(null);
-            product1.setQuantity(detailCarts.get(index).getQuantity());
-            productList.add(product1);
-            index++;
-        }
-        model.addAttribute("products", productList);
+    public String viewCart() {
         return "/user/cart";
     }
 
@@ -83,6 +57,8 @@ public class HomeController {
     public String login() {
         return "/user/login";
     }
+
+
 
 
     @GetMapping("/product")
@@ -108,6 +84,11 @@ public class HomeController {
     @GetMapping("/order")
     public String order() {
         return "user/order";
+    }
+
+    @GetMapping("/about")
+    public String about() {
+        return "user/about";
     }
 
     @GetMapping("/signup")
@@ -142,7 +123,7 @@ public class HomeController {
             model.addAttribute("input_username", username);
             model.addAttribute("input_password", pwd);
             model.addAttribute("input_re_password", pwd_confirm);
-            return "user/signup";
+            return "signup";
         } else {
             // Create cart
             Cart cart = new Cart();
@@ -153,19 +134,14 @@ public class HomeController {
             // Create user
             User u = new User();
             Date date = new Date();
-            String password = passwordEncoder.encode(pwd);
             u.setName(name);
             u.setUsername(username);
             u.setCreatedAt(date);
             u.setUpdatedAt(date);
-            u.setActive(1);
-            u.setOffice("Khách hàng");
-            u.setPermissions("0");
             u.setRole("USER");
             u.setCart(cart);
-            u.setPassword(password);
+            u.setPassword(passwordEncoder.encode(pwd));
             userService.save(u);
-
 
             session.setAttribute("user", u.getUsername());
             session.setAttribute("user_role", u.getRole());
