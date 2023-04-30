@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -162,9 +163,9 @@ public class APIController {
     public ResponseEntity<ResponseObject> getCategory(@PathVariable("id") Long id) {
         Optional<Category> category = categoryService.findById(id);
         if (category.isPresent()) {
-            Long promoId = category.get().getPromotion().getId();
+            Promotions promo = category.get().getPromotion();
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Successfully", "Cập nhật danh mục", promoId, category)
+                    new ResponseObject("ok", "Successfully", "Cập nhật danh mục", promo != null ? promo.getId() : null, category)
             );
         } else {
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -176,10 +177,20 @@ public class APIController {
     @PutMapping("/category/{id}")
     public void updateCategory(@PathVariable("id") Long id, @RequestBody CategoryDTO categoryDTO) {
         Category category = categoryService.findById(id).orElse(null);
+        Promotions promotion = promotionService.findById(categoryDTO.getPromotion_id()).orElse(null);
         if (category != null) {
             category.setDescription(categoryDTO.getDescription());
             category.setPromotion(Promotions.builder().id(categoryDTO.getPromotion_id()).build());
             categoryService.updateCategory(category);
+
+            List<Product> products = productService.findProducts(category);
+            System.out.println(products.size());
+            if (promotion != null) {
+                products.forEach(product -> {
+                    product.setNewPrice(product.getPrice() - (product.getPrice() * promotion.getPromotionLimit()/100.0));
+                    productService.save(product);
+                });
+            }
         } else {
             System.out.println("Category not found");
         }

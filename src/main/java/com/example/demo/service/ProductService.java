@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.ProductDTO;
+import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,4 +18,5 @@ public interface ProductService {
     boolean removeById(Long id);
     boolean save(Product product);
 
+    List<Product> findProducts(Category category);
 }

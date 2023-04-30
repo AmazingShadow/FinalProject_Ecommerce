@@ -144,10 +144,10 @@
                         <textarea id="description" name="description" type="text" class="form-control"
                                   placeholder="Nhập nội dung bài viết"></textarea>
                     </div>
-                    <div class="mb-3">
-                        <label for="productPrice" class="form-label">Phân loại</label>
+                    <div class="mb-3" id="giamgia">
+                        <label for="productPrice" class="form-label">Giảm giá</label>
                         <select class="form-select" name="promotion_id" id="productPrice">
-                            <option value="-1">Chọn phân loại</option>
+                            <option value="null">Chọn phân loại</option>
                             <option th:each="promotion : ${promotions}" th:value="${promotion.getId()}" th:text="${promotion.getName()}"></option>
                         </select>
                     </div>
@@ -176,6 +176,7 @@
     const idCategory = document.getElementById('idCategory')
     const deleteEmployeeModal = document.getElementById('deleteEmployeeModal')
     const deleteCategory = document.getElementById('deleteCategory')
+    const giamgia = document.getElementById('giamgia')
     let categoryId
 
     edit.forEach(edt => {
@@ -194,6 +195,7 @@
                     add.style.display = 'none'
                     update.style.display = 'block'
                     idCategory.innerHTML = data.id
+                    giamgia.style.display = 'block'
                     name.setAttribute('readonly', 'true')
                 },
                 error: function(error) {
@@ -210,6 +212,7 @@
         name.value = ''
         description.value = ''
         type.value = ''
+        giamgia.style.display = 'none'
         name.removeAttribute('readonly')
     })
 

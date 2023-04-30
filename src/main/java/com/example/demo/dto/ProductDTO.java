@@ -23,6 +23,7 @@ public class ProductDTO {
     private String information;
     private String size;
     private String title;
+    private Double newPrice;
 
 //    public Long getId() {
 //        return this.id;

@@ -27,6 +27,7 @@ public class Product {
     private String information;
     private String size;
     private String title;
+    private double newPrice;
 
     @Lob
     private String description;

@@ -2,9 +2,13 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dto.CategoryDTO;
 import com.example.demo.entity.Category;
+import com.example.demo.entity.Product;
 import com.example.demo.entity.Promotions;
 import com.example.demo.repository.CategoryRepository;
+import com.example.demo.repository.ProductRepository;
+import com.example.demo.repository.PromotionRepository;
 import com.example.demo.service.CategoryService;
+import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +21,12 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private PromotionRepository promotionRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
 
     @Override
@@ -33,6 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .build();
 
         categoryRepository.save(category);
+
     }
 
     @Override

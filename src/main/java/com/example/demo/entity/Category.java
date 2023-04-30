@@ -24,7 +24,7 @@ public class Category {
     private Set<Product> products;
 
     @ManyToOne
-    @JoinColumn(name = "promotion_id", nullable = false, referencedColumnName = "id")
+    @JoinColumn(name = "promotion_id", referencedColumnName = "id")
     @JsonBackReference
     private Promotions promotion;
 }

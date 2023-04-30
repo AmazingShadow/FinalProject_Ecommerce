@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
@@ -79,7 +79,6 @@
                 </header>
                 <div class="filter-content collapse show" id="collapse_3" style="">
                     <div class="card-body">
-                        <input class="form-range" max="100" min="0" name="" step="0.5" type="range">
                         <label class="custom-control custom-checkbox">
                             <input checked class="custom-control-input" type="checkbox">
                             <div class="custom-control-label">All</div>
@@ -146,62 +145,23 @@
                     </div><!-- card-body.// -->
                 </div>
             </article> <!-- filter-group .// -->
-            <article class="filter-group">
-                <header class="card-header">
-                    <a aria-expanded="true" class="" data-bs-target="#collapse_5" data-bs-toggle="collapse" href="#">
-                        <div class="row">
-                            <div class="col"><h6 class="title">Mục đích sử dụng</h6></div>
-                            <div class="col-lg-2"><i class="icon-control fa fa-chevron-down"></i></div>
-                        </div>
-                    </a>
-                </header>
-                <div class="filter-content collapse show" id="collapse_5" style="">
-                    <div class="card-body">
-                        <label class="custom-control custom-checkbox">
-                            <input checked class="custom-control-input" type="checkbox">
-                            <div class="custom-control-label">All</div>
-                        </label>
-                        <label class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox">
-                            <div class="custom-control-label">Sinh viên</div>
-                        </label>
-                        <label class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox">
-                            <div class="custom-control-label">Gaming</div>
-                        </label>
-                        <label class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox">
-                            <div class="custom-control-label">Doanh nhân</div>
-                        </label>
-                        <label class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox">
-                            <div class="custom-control-label">Văn phòng</div>
-                        </label>
-                        <label class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox">
-                            <div class="custom-control-label">Mỏng nhẹ</div>
-                        </label>
-                    </div><!-- card-body.// -->
-                </div>
-            </article>
         </div>
         <div class="col col-9">
             <div class="row">
-
-                <div class="col-md-4 my-3">
+                <div th:each="product : ${products}" class="col-md-4 my-3">
                     <div class="card card-product-grid rounded-2">
                         <div class="img-wrap">
                             <span class="badge rounded-pill badge-danger"> NEW </span>
                             <img alt="Image Product"
                                  class="rounded card-img-top"
-                                 src="images/Lt1.webp">
+                                 th:src="@{'data:image/jpeg;base64,' + ${product.getImage()}}">
                         </div>
                         <div class="info-wrap card-body">
                             <div class="fix-height">
-                                <a class="card-title title" href="/detail">Laptop gì đó</a>
+                                <a th:text="${product.getName()}" class="card-title title" href="/detail"></a>
                                 <div class="row price-wrap mb-2 mx-1">
                                     <div class="col-lg-7 rounded-pill bg-danger text-white my-3 text-center">
-                                        <span class="price rounded-pill h6">20.000.000vnđ</span>
+                                        <span th:text="${product.getPrice()}" class="price rounded-pill h6 price"></span>
                                     </div>
                                     <div class="col-lg-5 pt-3">
                                         <del class="price-old"> Chỗ này là giá cũ</del>
@@ -214,100 +174,6 @@
                         </div>
 
                         <a class="btn btn-block btn-primary" href="/detail">Chi tiết sản phẩm</a>
-                        <a class="btn btn-block btn-primary" data-bs-toggle="modal" href="#">
-                            <i class="fas fa-cart-plus fa-3xl me-1"></i>
-                            Thêm vào giỏ hàng </a>
-                    </div>
-                </div>
-                <div class="col-md-4 my-3">
-                    <div class="card card-product-grid rounded-2">
-                        <div class="img-wrap">
-                            <span class="badge rounded-pill badge-danger"> NEW </span>
-                            <img alt="Image Product"
-                                 class="rounded card-img-top"
-                                 src="images/Lt1.webp">
-                        </div>
-                        <div class="info-wrap card-body">
-                            <div class="fix-height">
-                                <a class="card-title title" href="#">Laptop gì đó</a>
-                                <div class="row price-wrap mb-2 mx-1">
-                                    <div class="col-lg-7 rounded-pill bg-danger text-white my-3 text-center">
-                                        <span class="price rounded-pill h6">20.000.000vnđ</span>
-                                    </div>
-                                    <div class="col-lg-5 pt-3">
-                                        <del class="price-old"> Chỗ này là giá cũ</del>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="fix-height rounded p-3 text-muted" style="background-color: #e9ecef">
-                                <div class="row quick-info">Trong này là cấu hinhf</div>
-                            </div>
-                        </div>
-
-                        <a class="btn btn-block btn-primary" href="#">Chi tiết sản phẩm</a>
-                        <a class="btn btn-block btn-primary" data-bs-toggle="modal" href="#">
-                            <i class="fas fa-cart-plus fa-3xl me-1"></i>
-                            Thêm vào giỏ hàng </a>
-
-                    </div>
-                </div>
-                <div class="col-md-4 my-3">
-                    <div class="card card-product-grid rounded-2">
-                        <div class="img-wrap">
-                            <span class="badge rounded-pill badge-danger"> NEW </span>
-                            <img alt="Image Product"
-                                 class="rounded card-img-top"
-                                 src="images/Lt1.webp">
-                        </div>
-                        <div class="info-wrap card-body">
-                            <div class="fix-height">
-                                <a class="card-title title" href="#">Laptop gì đó</a>
-                                <div class="row price-wrap mb-2 mx-1">
-                                    <div class="col-lg-7 rounded-pill bg-danger text-white my-3 text-center">
-                                        <span class="price rounded-pill h6">20.000.000vnđ</span>
-                                    </div>
-                                    <div class="col-lg-5 pt-3">
-                                        <del class="price-old"> Chỗ này là giá cũ</del>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="fix-height rounded p-3 text-muted" style="background-color: #e9ecef">
-                                <div class="row quick-info">Trong này là cấu hinhf</div>
-                            </div>
-                        </div>
-
-                        <a class="btn btn-block btn-primary" href="#">Chi tiết sản phẩm</a>
-                        <a class="btn btn-block btn-primary" data-bs-toggle="modal" href="#">
-                            <i class="fas fa-cart-plus fa-3xl me-1"></i>
-                            Thêm vào giỏ hàng </a>
-                    </div>
-                </div>
-                <div class="col-md-4 my-3">
-                    <div class="card card-product-grid rounded-2">
-                        <div class="img-wrap">
-                            <span class="badge rounded-pill badge-danger"> NEW </span>
-                            <img alt="Image Product"
-                                 class="rounded card-img-top"
-                                 src="images/Lt1.webp">
-                        </div>
-                        <div class="info-wrap card-body">
-                            <div class="fix-height">
-                                <a class="card-title title" href="#">Laptop gì đó</a>
-                                <div class="row price-wrap mb-2 mx-1">
-                                    <div class="col-lg-7 rounded-pill bg-danger text-white my-3 text-center">
-                                        <span class="price rounded-pill h6">20.000.000vnđ</span>
-                                    </div>
-                                    <div class="col-lg-5 pt-3">
-                                        <del class="price-old"> Chỗ này là giá cũ</del>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="fix-height rounded p-3 text-muted" style="background-color: #e9ecef">
-                                <div class="row quick-info">Trong này là cấu hinhf</div>
-                            </div>
-                        </div>
-
-                        <a class="btn btn-block btn-primary" href="#">Chi tiết sản phẩm</a>
                         <a class="btn btn-block btn-primary" data-bs-toggle="modal" href="#">
                             <i class="fas fa-cart-plus fa-3xl me-1"></i>
                             Thêm vào giỏ hàng </a>
@@ -342,3 +208,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
+<script>
+    const price = document.querySelectorAll('.price')
+    price.forEach(pr => {
+        let priceProduct = pr.innerHTML
+        pr.innerHTML = Number(priceProduct).toLocaleString('en-US') + ' VNĐ';
+    })
+</script>
