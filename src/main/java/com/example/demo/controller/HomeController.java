@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Cart;
-import com.example.demo.entity.DetailCart;
-import com.example.demo.entity.Product;
-import com.example.demo.entity.User;
+import com.example.demo.entity.*;
 import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,11 +11,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -42,6 +41,9 @@ public class HomeController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CategoryService categoryService;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -86,7 +88,9 @@ public class HomeController {
     public String product(Model model, @RequestParam("page") Optional<Integer> page) {
         Pageable pageable = PageRequest.of(page.orElse(0), 6);
         Page<Product> products = productService.findAll(pageable);
+        List<Category> categories = categoryService.getAll();
         model.addAttribute("products", products);
+        model.addAttribute("categories", categories);
         model.addAttribute("startPage", 0);
         return "user/product1";
     }
@@ -144,7 +148,7 @@ public class HomeController {
             model.addAttribute("input_username", username);
             model.addAttribute("input_password", pwd);
             model.addAttribute("input_re_password", pwd_confirm);
-            return "signup";
+            return "user/signup";
         } else {
             // Create cart
             Cart cart = new Cart();
@@ -171,5 +175,36 @@ public class HomeController {
             session.setAttribute("user_role", u.getRole());
             return "redirect:/login";
         }
+    }
+
+    @PostMapping("/search")
+    public ModelAndView search(@RequestParam(value = "category", required = false) String category,
+                               @RequestParam(value = "brand", required = false) String brand,
+                               @RequestParam(value = "color", required = false) String color,
+                               @RequestParam("page") Optional<Integer> page) {
+
+        Pageable pageable = PageRequest.of(page.orElse(0), 6);
+        List<Category> categories = categoryService.getAll();
+        Category category1 = null;
+        if (category != "") {
+            category1 = categoryService.findById(Long.parseLong(category)).orElse(null);
+        }
+        Page<Product> products = null;
+        ModelMap model = new ModelMap();
+        int productPrice = 0;
+
+        if (category == null && brand == null && color == null) {
+            products = productService.findAll(pageable);
+        } else {
+            products = productService.findAllProductSearch(brand, color, category1, pageable);
+        }
+
+
+        model.addAttribute("products", products);
+        model.addAttribute("brand", brand);
+        model.addAttribute("category", category);
+        model.addAttribute("color", color);
+        model.addAttribute("categories", categories);
+        return new ModelAndView("user/product1", model);
     }
 }

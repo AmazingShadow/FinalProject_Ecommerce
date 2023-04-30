@@ -19,4 +19,7 @@ public interface ProductService {
     boolean save(Product product);
 
     List<Product> findProducts(Category category);
+//    List<Product> findProductsBy(String brand, String color);
+    Page<Product> findAllProductSearch(String brand, String color, Category category, Pageable pageable);
+    List<Product> getAll();
 }
