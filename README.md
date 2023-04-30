@@ -5,10 +5,10 @@
 51800740 - Nguyễn Hoàng Việt
 
 Cách chạy chương trình
-B1: clone project về \n
-B2: thêm database đã cung cấp vào cơ sở dữ liệu \n
-B3: Mở project bằng phần mềm Intellij sau đó phần mềm sẽ tự động tải các dependencies có trong file pom \n
-B4: Bấm run để chạy chương trình.\n
+B1: clone project về  
+B2: thêm database đã cung cấp vào cơ sở dữ liệu  
+B3: Mở project bằng phần mềm Intellij sau đó phần mềm sẽ tự động tải các dependencies có trong file pom  
+B4: Bấm run để chạy chương trình.  
 Tài khoản admin:
 Username: admin
 Password: admin
